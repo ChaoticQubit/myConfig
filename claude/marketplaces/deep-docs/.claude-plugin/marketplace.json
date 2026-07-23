@@ -1,0 +1,19 @@
+{
+  "name": "deep-docs",
+  "owner": {
+    "name": "chaoticqubit"
+  },
+  "description": "Marketplace hosting the deep-docs product-documentation plugin.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "deep-docs",
+      "source": "./plugins/deep-docs",
+      "description": "Generate deep, comprehensive product documentation for any codebase — architecture, subsystem deep-dives, tech-stack rationale, end-to-end data flows, config/DSL tutorials, local + CI/CD setup, testing, debugging runbooks, stakeholder guides, and done-vs-pending status, all illustrated with technical mermaid diagrams.",
+      "version": "0.1.0",
+      "author": {
+        "name": "chaoticqubit"
+      }
+    }
+  ]
+}

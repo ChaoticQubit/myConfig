@@ -1,0 +1,19 @@
+{
+  "name": "deep-docs",
+  "version": "0.1.0",
+  "description": "Generate deep, comprehensive product documentation for any finished codebase — architecture, subsystem deep-dives, tech-stack rationale, end-to-end data flows, config/DSL tutorials, local + CI/CD setup, testing, debugging runbooks, stakeholder guides, and done-vs-pending status, all illustrated with technical mermaid diagrams.",
+  "author": {
+    "name": "chaoticqubit"
+  },
+  "keywords": [
+    "documentation",
+    "architecture",
+    "mermaid",
+    "diagrams",
+    "onboarding",
+    "technical-writing",
+    "codebase",
+    "handoff",
+    "developer-docs"
+  ]
+}

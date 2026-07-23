@@ -1,0 +1,29 @@
+{
+  "name": "software-practices",
+  "owner": {
+    "name": "Arman Singhal (ChaoticQubit)",
+    "email": "chaoticqubit@gmail.com"
+  },
+  "metadata": {
+    "description": "Marketplace hosting the Software Practices plugin.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "software-practices",
+      "source": "./plugins/software-practices",
+      "description": "Codifies Google's software engineering practices from 'Software Engineering at Google': trunk-based development, feature flags, code review, testing, and core engineering principles.",
+      "version": "1.0.0",
+      "category": "engineering",
+      "keywords": [
+        "trunk-based-development",
+        "feature-flags",
+        "code-review",
+        "testing",
+        "monorepo",
+        "continuous-integration",
+        "google"
+      ]
+    }
+  ]
+}

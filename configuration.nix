@@ -37,6 +37,7 @@
     onActivation.extraFlags = [ "--force" ];
     casks = [
       "wezterm"
+      "claude-code"
     ];
 
     brews = [
@@ -51,6 +52,7 @@
       "codeburn"
       "luarocks"
       "luajit"
+      "herdr"
     ];
   };
 }

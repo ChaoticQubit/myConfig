@@ -1,0 +1,21 @@
+{
+  "name": "software-practices",
+  "version": "1.0.0",
+  "description": "Applies Google's software engineering practices from the book 'Software Engineering at Google' (abseil.io/resources/swe-book): trunk-based development, feature-flag-guarded releases, small reviewed changes, and the test-size pyramid.",
+  "author": {
+    "name": "Arman Singhal (ChaoticQubit)",
+    "email": "chaoticqubit@gmail.com"
+  },
+  "homepage": "https://abseil.io/resources/swe-book/html/toc.html",
+  "license": "MIT",
+  "keywords": [
+    "trunk-based-development",
+    "feature-flags",
+    "code-review",
+    "testing",
+    "monorepo",
+    "continuous-delivery",
+    "google",
+    "software-engineering"
+  ]
+}
