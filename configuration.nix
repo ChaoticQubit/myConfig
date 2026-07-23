@@ -49,6 +49,8 @@
       "ggml"
       "bun"
       "codeburn"
+      "luarocks"
+      "luajit"
     ];
   };
 }

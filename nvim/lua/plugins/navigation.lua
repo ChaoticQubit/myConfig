@@ -4,6 +4,7 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+      dashboard = { enabled = true },
       picker = { enabled = true },
       notifier = { enabled = true },
       input = { enabled = true },
