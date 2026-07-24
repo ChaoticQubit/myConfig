@@ -53,6 +53,8 @@
       "luarocks"
       "luajit"
       "herdr"
+      "ffmpeg"
+      "ollama"
     ];
   };
 }
