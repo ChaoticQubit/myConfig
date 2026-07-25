@@ -37,7 +37,7 @@
     onActivation.extraFlags = [ "--force" ];
     casks = [
       "wezterm"
-      "claude-code"
+      "claude-code@latest"
     ];
 
     brews = [
