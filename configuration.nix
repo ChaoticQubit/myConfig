@@ -55,6 +55,7 @@
       "herdr"
       "ffmpeg"
       "ollama"
+      "shellcheck"
     ];
   };
 }

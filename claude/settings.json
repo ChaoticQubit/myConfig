@@ -5,45 +5,7 @@
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "true",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "npx -y ccstatusline@latest",
-    "padding": 0,
-    "refreshInterval": 10
-  },
-  "enabledPlugins": {
-    "context-mode@context-mode": true,
-    "coderabbit@claude-plugins-official": false,
-    "ponytail@ponytail": true,
-    "software-practices@software-practices": true,
-    "deep-docs@deep-docs": true
-  },
-  "extraKnownMarketplaces": {
-    "context-mode": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/mksglu/context-mode.git"
-      }
-    },
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    },
-    "software-practices": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/software-practices"
-      }
-    },
-    "deep-docs": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/deep-docs"
-      }
-    }
-  },
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -108,6 +70,45 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+  "enabledPlugins": {
+    "context-mode@context-mode": true,
+    "coderabbit@claude-plugins-official": false,
+    "ponytail@ponytail": true,
+    "software-practices@software-practices": true,
+    "deep-docs@deep-docs": true
+  },
+  "extraKnownMarketplaces": {
+    "context-mode": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/mksglu/context-mode.git"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "software-practices": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/software-practices"
+      }
+    },
+    "deep-docs": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/deep-docs"
+      }
+    }
+  },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
   "tui": "fullscreen",
@@ -116,6 +117,5 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
-  "remoteControlAtStartup": false,
-  "model": "claude-fable-5[1m]"
+  "remoteControlAtStartup": false
 }
