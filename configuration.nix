@@ -56,6 +56,8 @@
       "ffmpeg"
       "ollama"
       "shellcheck"
+      "go"
+      "delve"
     ];
   };
 }
