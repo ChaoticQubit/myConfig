@@ -16,10 +16,18 @@ in
     lazygit
     neovim
     nerd-fonts.hack
-    nodejs
   ];
   fonts.fontconfig.enable = true;
   home.sessionVariables.EDITOR = "nvim";
+
+  home.activation.npmGlobals = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    run /opt/homebrew/bin/npm install -g \
+      gh-axi \
+      tasks-axi \
+      chrome-devtools-axi \
+      lavish-axi \
+      quota-axi
+  '';
 
   programs.zsh = {
     enable = true;

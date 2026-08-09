@@ -41,6 +41,7 @@
     ];
 
     brews = [
+      "node"
       "yt-dlp"
       "whisper-cpp"
       "htop"
