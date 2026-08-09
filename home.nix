@@ -21,7 +21,8 @@ in
   home.sessionVariables.EDITOR = "nvim";
 
   home.activation.npmGlobals = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    run /opt/homebrew/bin/npm install -g \
+    export PATH="/opt/homebrew/bin:$PATH"
+    run npm install -g \
       gh-axi \
       tasks-axi \
       chrome-devtools-axi \
