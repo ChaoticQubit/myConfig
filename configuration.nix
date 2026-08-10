@@ -59,6 +59,7 @@
       "shellcheck"
       "go"
       "delve"
+      "uv"
     ];
   };
 }

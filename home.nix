@@ -23,6 +23,7 @@ in
   home.activation.npmGlobals = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="/opt/homebrew/bin:$PATH"
     run npm install -g \
+      ccstatusline \
       gh-axi \
       tasks-axi \
       chrome-devtools-axi \
