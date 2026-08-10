@@ -2,6 +2,18 @@
 
 let
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
+  managedState = "${config.home.homeDirectory}/.local/state/home-manager-managed";
+  npmGlobals = [
+    "ccstatusline"
+    "gh-axi"
+    "tasks-axi"
+    "chrome-devtools-axi"
+    "lavish-axi"
+    "quota-axi"
+  ];
+  imperativeTools = [
+    "ccwarriors"
+  ];
 in
 
 {
@@ -22,13 +34,81 @@ in
 
   home.activation.npmGlobals = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     export PATH="/opt/homebrew/bin:$PATH"
-    run npm install -g \
-      ccstatusline \
-      gh-axi \
-      tasks-axi \
-      chrome-devtools-axi \
-      lavish-axi \
-      quota-axi
+    declared="${builtins.concatStringsSep " " npmGlobals}"
+    manifest="${managedState}/npm-globals"
+    run mkdir -p "${managedState}"
+    if [ -f "$manifest" ]; then
+      while read -r pkg; do
+        if [ -z "$pkg" ]; then
+          continue
+        fi
+        case " $declared " in
+          *" $pkg "*) ;;
+          *) run npm uninstall -g "$pkg" ;;
+        esac
+      done < "$manifest"
+    fi
+    if [ -n "$declared" ]; then
+      run npm install -g $declared
+    fi
+    printf '%s\n' $declared > "$manifest"
+  '';
+
+  home.activation.imperativeTools = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    export PATH="/opt/homebrew/bin:$PATH"
+
+    install_ccwarriors() {
+      if [ ! -x "$HOME/.ccwarriors/bin/ccwarriors" ]; then
+        curl -fsSL https://ccwarriors.xyz/install.sh | CCWARRIORS_NO_RUN=1 CCWARRIORS_REF=badge bash
+        if [ ! -x "$HOME/.ccwarriors/bin/ccwarriors" ]; then
+          echo "error: the ccwarriors installer finished but left no executable at ~/.ccwarriors/bin/ccwarriors" >&2
+          return 1
+        fi
+      fi
+      if [ ! -f "$HOME/.claude-warriors/config.json" ]; then
+        echo "ccwarriors is installed but not logged in; run 'ccwarriors' once, then rebuild to start background sync"
+        return 0
+      fi
+      "$HOME/.ccwarriors/bin/ccwarriors" autosync on
+    }
+
+    uninstall_ccwarriors() {
+      launchctl bootout "gui/$(id -u)/xyz.ccwarriors.sync" 2>/dev/null || true
+      pkill -f '\.ccwarriors/cli\.js' 2>/dev/null || true
+      rm -f "$HOME/Library/LaunchAgents/xyz.ccwarriors.sync.plist"
+      rm -f "$HOME/.local/bin/ccwarriors"
+      rm -rf "$HOME/.ccwarriors" "$HOME/.claude-warriors"
+    }
+
+    declared="${builtins.concatStringsSep " " imperativeTools}"
+    manifest="${managedState}/imperative-tools"
+    run mkdir -p "${managedState}"
+    if [ -f "$manifest" ]; then
+      while read -r tool; do
+        if [ -z "$tool" ]; then
+          continue
+        fi
+        case " $declared " in
+          *" $tool "*) ;;
+          *)
+            if ! command -v "uninstall_$tool" >/dev/null 2>&1; then
+              echo "error: $tool was dropped from imperativeTools but its uninstall_$tool recipe is gone too, so it cannot be removed" >&2
+              echo "       restore the recipe in home.nix, rebuild once to uninstall it, then delete the recipe" >&2
+              exit 1
+            fi
+            run "uninstall_$tool"
+            ;;
+        esac
+      done < "$manifest"
+    fi
+    for tool in $declared; do
+      if ! command -v "install_$tool" >/dev/null 2>&1; then
+        echo "error: imperativeTools lists $tool but home.nix defines no install_$tool recipe" >&2
+        exit 1
+      fi
+      run "install_$tool"
+    done
+    printf '%s\n' $declared > "$manifest"
   '';
 
   programs.zsh = {
