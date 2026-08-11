@@ -33,7 +33,8 @@ in
   home.sessionVariables.EDITOR = "nvim";
 
   home.activation.npmGlobals = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="/opt/homebrew/bin:$PATH"
+    hmPath="$PATH"
+    export PATH="$PATH:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     declared="${builtins.concatStringsSep " " npmGlobals}"
     manifest="${managedState}/npm-globals"
     run mkdir -p "${managedState}"
@@ -52,10 +53,12 @@ in
       run npm install -g $declared
     fi
     printf '%s\n' $declared > "$manifest"
+    export PATH="$hmPath"
   '';
 
   home.activation.imperativeTools = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="/opt/homebrew/bin:$PATH"
+    hmPath="$PATH"
+    export PATH="$PATH:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
     install_ccwarriors() {
       if [ ! -x "$HOME/.ccwarriors/bin/ccwarriors" ]; then
@@ -109,6 +112,7 @@ in
       run "install_$tool"
     done
     printf '%s\n' $declared > "$manifest"
+    export PATH="$hmPath"
   '';
 
   programs.zsh = {

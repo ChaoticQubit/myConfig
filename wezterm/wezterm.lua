@@ -1,9 +1,25 @@
 local wezterm = require("wezterm")
-
+local mux = wezterm.mux
 local config = wezterm.config_builder()
 
 local is_windows = os.getenv("OS") and os.getenv("OS"):lower():find("windows")
 local is_macos = wezterm.target_triple:lower():find("darwin") ~= nil
+
+wezterm.on('gui-startup', function(cmd)
+  local width_percent = 0.90
+  local height_percent = 0.80
+
+  local screen = wezterm.gui.screens().main
+
+  local pixel_width = screen.width * width_percent
+  local pixel_height = screen.height * height_percent
+
+  mux.spawn_window({
+    width = math.floor(pixel_width),
+    height = math.floor(pixel_height),
+    args = mcd and cmd.args or nil,
+  })
+end)
 
 -- ui
 config.color_scheme = "rose-pine-moon"
@@ -12,7 +28,7 @@ config.font = wezterm.font("Hack Nerd Font")
 config.font_size = 13.0
 
 config.enable_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = false
+config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = "RESIZE"
 config.window_frame = {
 	font = wezterm.font("Hack Nerd Font", { weight = "Bold" }),
