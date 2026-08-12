@@ -40,8 +40,18 @@
       "claude-code@latest"
     ];
 
+    taps = [
+      "hashicorp/tap"
+    ];
+
     brews = [
       "node"
+      "azure-cli"
+      "hashicorp/tap/terraform"
+      "golangci-lint"
+      "actionlint"
+      "pre-commit"
+      "typst"
       "yt-dlp"
       "whisper-cpp"
       "htop"
