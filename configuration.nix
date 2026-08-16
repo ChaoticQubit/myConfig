@@ -38,10 +38,12 @@
     casks = [
       "wezterm"
       "claude-code@latest"
+      "entireio/tap/entire"
     ];
 
     taps = [
       "hashicorp/tap"
+      "entireio/tap"
     ];
 
     brews = [
