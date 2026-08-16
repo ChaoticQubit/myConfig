@@ -81,7 +81,8 @@
     "coderabbit@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "software-practices@software-practices": true,
-    "deep-docs@deep-docs": true
+    "deep-docs@deep-docs": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
