@@ -11,6 +11,7 @@ let
     "lavish-axi"
     "quota-axi"
     "deepsec"
+    "pnpm"
   ];
   imperativeTools = [
     "ccwarriors"
