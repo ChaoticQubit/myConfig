@@ -194,3 +194,12 @@ nothing - real systems only.
   Need a new tool? Say what's needed and why, then wait - the user adds it to the dotfiles config
   and installs it themselves. Never run `rebuild.sh` or any nix-darwin/home-manager rebuild - the
   user always runs that.
+- Every project's `.gitignore` ignores: any codebase-graph cache dir (`graphify-out/` or
+  equivalent), all `.env`/credential files, and generated tool-state dotfiles that are genuinely
+  local/ephemeral. Check a tool's own convention before adding its dotfile here - some (DeepSec's
+  `.deepsec/`) are designed to be committed, holding shared state across runs/CI/teammates, and
+  ignoring one of those defeats the tool rather than tidying the repo. Default new agent-instruction
+  files (`CLAUDE.md`, `AGENTS.md`) to tracked, matching ScholarScope's own choice - ignoring them is
+  a per-project call, not this rule's default, since an untracked one doesn't ship on clone or show
+  in PR diffs. Never ignore `.github/` or `.gitignore` itself - "dotfiles" here means tool-generated
+  state, not every file that starts with a dot.

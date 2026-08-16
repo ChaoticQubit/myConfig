@@ -10,9 +10,13 @@ let
     "chrome-devtools-axi"
     "lavish-axi"
     "quota-axi"
+    "deepsec"
   ];
   imperativeTools = [
     "ccwarriors"
+  ];
+  uvTools = [
+    "graphifyy"
   ];
 in
 
@@ -52,6 +56,30 @@ in
     if [ -n "$declared" ]; then
       run npm install -g $declared
     fi
+    printf '%s\n' $declared > "$manifest"
+    export PATH="$hmPath"
+  '';
+
+  home.activation.uvTools = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    hmPath="$PATH"
+    export PATH="$PATH:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$HOME/.local/bin"
+    declared="${builtins.concatStringsSep " " uvTools}"
+    manifest="${managedState}/uv-tools"
+    run mkdir -p "${managedState}"
+    if [ -f "$manifest" ]; then
+      while read -r pkg; do
+        if [ -z "$pkg" ]; then
+          continue
+        fi
+        case " $declared " in
+          *" $pkg "*) ;;
+          *) run uv tool uninstall "$pkg" ;;
+        esac
+      done < "$manifest"
+    fi
+    for pkg in $declared; do
+      run uv tool install "$pkg"
+    done
     printf '%s\n' $declared > "$manifest"
     export PATH="$hmPath"
   '';
