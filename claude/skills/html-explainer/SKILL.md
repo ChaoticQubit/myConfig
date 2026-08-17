@@ -1,6 +1,12 @@
 ---
 name: html-explainer
-description: Transform any document, article, blog post, course, README, spec, PDF, or URL into a visual-first, single-file interactive HTML page in the spirit of Thariq Shihipar's "The Unreasonable Effectiveness of HTML" — minimal visible text, with the content delivered through icon cards, diagrams, flows, stat tiles, timelines, flip cards, and live simulations; full detail hidden behind hover/flip/expand. Use this skill whenever the user shares content (or a link to content) they want to read, learn, study, or understand faster or with less reading; asks to "make an HTML version", "create an explainer", "turn this into a website/page", "make this visual", "summarize this as a page", "Thariq style", "interactive version"; or wants a doc, course, or article presented better — even if they never say the word "HTML".
+description: >-
+  Turn a document, article, README, spec, PDF, course, or URL into a visual-first
+  single-file interactive HTML page (Thariq Shihipar style): icon cards, diagrams,
+  flows, stat tiles, timelines, flip cards, simulations, detail behind hover/expand.
+  Use on "make an HTML version", "create an explainer", "make this visual", "Thariq
+  style", "interactive version", or when the user wants content understood with less
+  reading, even if they never say HTML.
 ---
 
 # HTML Explainer — visual-first interactive pages

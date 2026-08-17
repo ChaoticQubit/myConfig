@@ -1,9 +1,9 @@
 ---
 name: tiger-style
-description: >
-  TigerBeetle's engineering discipline (docs/TIGER_STYLE.md), adapted for Go/TypeScript/Python
-  web-service codebases. Design priority order: safety, performance, developer experience. Runs
-  as the third leg of gate 4 (Design), after software-practices and ponytail, on every build/change.
+description: >-
+  TigerBeetle engineering discipline (assertions, bounds, shape, naming) for Go/TypeScript/Python
+  services. Priority order: safety, performance, developer experience. Third leg of gate 4, after
+  software-practices and ponytail, on every build/change.
 ---
 
 Design priority order, in this order, a lower one never wins a tradeoff against a higher one:

@@ -1,6 +1,10 @@
 ---
 name: to-linear-projects
-description: Take a product scope or ideation document and produce one Linear project markdown per natural area of work (e.g., authentication, frontend, payments, infrastructure, observability, design system). Each markdown contains title, description, goals, milestones, lead/owner placeholder, color suggestion, and dependencies — everything needed to publish as a Linear project. Use whenever the user has a broad product scope and wants to organize work into Linear projects, asks "help me set up Linear projects for this", "group this into projects", "turn this scope into Linear-ready project briefs", "what projects should I create in Linear", or "set up a Linear workspace structure for this product".
+description: >-
+  Split a product scope into one markdown per Linear project (area of work: auth, payments,
+  frontend, infra), each with title, description, goals, milestones, owner, color,
+  dependencies. Use on "set up Linear projects for this", "group this into projects",
+  "what projects should I create in Linear".
 ---
  
 # To Linear Projects

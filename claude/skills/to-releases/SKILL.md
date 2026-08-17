@@ -1,6 +1,10 @@
 ---
 name: to-releases
-description: Slice a broad product scope or ideation document into a sequence of independently-shippable releases (v1, v2, v3...). Each release markdown captures theme, target users, in/out of scope, rough timeline, success metrics, dependencies on prior releases, constraints, and open questions. Use whenever the user has a broad product scope and is asking what should ship first, how to sequence versions, what v1 looks like, or wants a release plan, version roadmap, or MVP cut. Trigger on phrases like "break this into releases", "what should v1 be", "release plan", "version roadmap", "sequence this scope", "MVP cut", or "phasing for this product".
+description: >-
+  Slice a product scope into independently-shippable releases (v1, v2, ...): theme, target
+  users, in/out of scope, timeline, success metrics, dependencies, open questions. Use on
+  "what should v1 be", "release plan", "version roadmap", "sequence this scope", "MVP cut",
+  "break this into releases".
 ---
  
 # To Releases

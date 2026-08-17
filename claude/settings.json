@@ -5,7 +5,6 @@
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "true",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
-  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -79,7 +78,7 @@
   "enabledPlugins": {
     "context-mode@context-mode": true,
     "coderabbit@claude-plugins-official": false,
-    "ponytail@ponytail": true,
+    "ponytail@ponytail": false,
     "software-practices@software-practices": true,
     "deep-docs@deep-docs": true,
     "superpowers@claude-plugins-official": true

@@ -1,6 +1,10 @@
 ---
 name: linear-method
-description: "Apply the Linear Method's principles and practices for project tracking and product building. Use this skill whenever the user is setting up or improving their project tracking system, planning product initiatives or roadmaps, writing issues or specs or project briefs, deciding how to structure cycles or sprints, managing backlogs or prioritizing work, designing team workflows, thinking about launching or shipping products, or asking about best practices for software product development. Also trigger when the user mentions Linear Method, project management best practices, issue writing, cycle planning, or product direction."
+description: >-
+  Linear Method principles for project tracking and product building. Use when writing
+  issues, specs, or project briefs, planning cycles or roadmaps, managing or prioritizing
+  a backlog, designing team workflow, or asking about product-development best practice.
+  Triggers: "Linear Method", issue writing, cycle planning, product direction.
 ---
  
 # SKILL.md — The Linear Method: Project Tracking & Product Building
