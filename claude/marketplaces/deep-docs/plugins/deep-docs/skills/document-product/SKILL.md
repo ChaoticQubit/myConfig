@@ -1,15 +1,12 @@
 ---
 name: document-product
 description: >
-  Generate deep, comprehensive product documentation for an entire codebase or product.
-  Use when the user asks to "document this product", "document this codebase", "write
-  architecture docs", "generate product documentation", "create a technical handoff /
-  onboarding document", "explain how this whole project works", "write client-grade docs
-  with diagrams", or "update / refresh the product docs after code changes". Produces a
-  single navigable markdown deliverable covering architecture (high + low level),
-  every subsystem, the tech stack and its rationale, end-to-end data flows, any custom
-  config/DSL, local + CI/CD setup, testing, debugging runbooks, per-stakeholder guides,
-  FAQs, and a done-vs-pending status — all illustrated with technical mermaid diagrams.
+  Comprehensive documentation for a whole codebase or product, as one navigable markdown
+  deliverable with mermaid diagrams: architecture high and low, every subsystem, stack
+  rationale, data flows, custom config/DSL, local and CI/CD setup, testing, debugging
+  runbooks, per-stakeholder guides, FAQs, done-vs-pending. Use on "document this
+  product/codebase", "write architecture docs", "technical handoff or onboarding doc",
+  "refresh the product docs".
 metadata:
   version: "0.1.0"
 ---

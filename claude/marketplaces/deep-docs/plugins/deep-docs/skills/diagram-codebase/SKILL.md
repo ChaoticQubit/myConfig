@@ -1,13 +1,10 @@
 ---
 name: diagram-codebase
 description: >
-  Generate a set of technical mermaid diagrams for a codebase or a single subsystem —
-  without writing the full documentation. Use when the user asks to "diagram this
-  codebase", "draw the architecture", "generate mermaid diagrams for this repo", "show
-  the data flow / sequence / DAG / state machine for &lt;X&gt;", "add architecture diagrams
-  to the README", or "visualize how this system works". Produces accurate, system-specific
-  mermaid (context, container, component/class, sequence, data flow, state, ER, DAG,
-  deployment, CI/CD) with a one-line caption explaining each.
+  System-specific mermaid diagrams for a codebase or one subsystem, without the full
+  documentation: context, container, component/class, sequence, data flow, state, ER,
+  DAG, deployment, CI/CD, each with a one-line caption. Use on "diagram this codebase",
+  "draw the architecture", "visualize how this system works".
 metadata:
   version: "0.1.0"
 ---

@@ -1,10 +1,9 @@
 ---
 name: to-releases
 description: >-
-  Slice a product scope into independently-shippable releases (v1, v2, ...): theme, target
-  users, in/out of scope, timeline, success metrics, dependencies, open questions. Use on
-  "what should v1 be", "release plan", "version roadmap", "sequence this scope", "MVP cut",
-  "break this into releases".
+  Slice a product scope into shippable releases (v1, v2, ...) with theme, users, scope
+  in/out, timeline, metrics, dependencies. Use on "what should v1 be", "release plan",
+  "roadmap", "MVP cut".
 ---
  
 # To Releases

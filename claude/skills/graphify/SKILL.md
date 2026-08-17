@@ -1,10 +1,9 @@
 ---
 name: graphify
 description: >-
-  Persistent knowledge graph of any input (code, docs, papers, images, video) with
-  query/path/explain tools. Use for any question about a codebase, its architecture,
-  file relationships, or project content - treat the question as a graphify query
-  first, especially when graphify-out/ exists.
+  Persistent knowledge graph (code, docs, papers, images, video) with query/path/explain.
+  Answer any question about a codebase, its architecture, file relationships or content
+  from the graph first, especially when graphify-out/ exists.
 ---
 
 # /graphify

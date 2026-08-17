@@ -1,7 +1,7 @@
 ---
 name: engineering-principles
 description: >
-  Apply the cross-cutting engineering principles from "Software Engineering at Google" (ch. 1-3, 8, 15, 18, 23) — the mental models behind trunk-based dev, flags, review, and testing. Use when the user is making a design/architecture tradeoff, weighing tech debt, writing or debating style rules, deprecating or migrating off an old system, setting up a build/CI system, thinking about maintainability over time, knowledge sharing, or engineering culture. Also use as the default "how would Google approach this engineering decision" advisor. Trigger phrases: "tech debt", "deprecate", "migration", "style guide", "coding standard", "build system", "CI", "maintainability", "Hyrum's law", "should we rewrite", "engineering culture", "design tradeoff".
+  Google engineering judgement (SWE at Google ch. 1-3, 8, 15, 18, 23), the models under trunk-based dev, flags, review and testing. Use for design/architecture tradeoffs, tech debt, style rules and coding standards, deprecation and migration, build/CI, maintainability, Hyrum's law, rewrite-or-not, engineering culture - and as the default advisor on an engineering decision.
 ---
 
 # Google Engineering Principles

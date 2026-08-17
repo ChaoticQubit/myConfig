@@ -1,7 +1,7 @@
 ---
 name: testing
 description: >
-  Apply Google's testing practices from "Software Engineering at Google" (ch. 11-14). Use when the user is writing tests, deciding what/how to test, choosing between unit and integration and end-to-end, dealing with flaky tests, using mocks/stubs/fakes/test doubles, structuring tests, thinking about coverage, or designing a test strategy. Trigger phrases: "write tests", "unit test", "integration test", "end to end", "test pyramid", "flaky test", "mock", "stub", "fake", "test double", "code coverage", "hermetic test", "how should I test".
+  Google testing practice (SWE at Google ch. 11-14): what and how to test, unit vs integration vs end-to-end, the test pyramid, test doubles (mock, stub, fake), flaky tests, coverage, hermetic tests, test strategy.
 ---
 
 # Testing (Google-style)

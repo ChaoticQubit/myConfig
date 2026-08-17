@@ -1,7 +1,7 @@
 ---
 name: feature-flags
 description: >
-  Apply Google's feature-flag-guarded release practices from "Software Engineering at Google" (ch. 23 Continuous Integration, ch. 24 Continuous Delivery). Use when the user wants to ship incomplete work safely to main, gate a feature behind a toggle, do a dark launch / canary / staged rollout, decouple deploy from release, roll back via config instead of redeploy, or clean up stale flags. Trigger phrases: "feature flag", "feature toggle", "flag guard", "dark launch", "canary", "staged rollout", "gradual rollout", "kill switch", "release train", "decouple deploy from release".
+  Flag-guarded release (SWE at Google ch. 23-24): ship incomplete work to main behind a toggle, feature flag or kill switch, dark launch, canary or staged rollout, decouple deploy from release, roll back by config, retire stale flags.
 ---
 
 # Feature Flags & Flag-Guarded Releases (Google-style)

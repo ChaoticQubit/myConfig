@@ -1,7 +1,7 @@
 ---
 name: code-review
 description: >
-  Apply Google's code review practices from "Software Engineering at Google" (ch. 9). Use when the user is writing a change/PR/CL and wants it reviewable, reviewing someone else's change, deciding how big a change should be, writing a change description/commit message, setting up review policy (approvals, OWNERS, readability), or asking how to give/receive review feedback. Trigger phrases: "code review", "review this PR", "review my change", "how big should this PR be", "LGTM", "OWNERS", "commit message", "change description", "readability review".
+  Google code review practice (SWE at Google ch. 9): making a change reviewable, how big a PR/CL should be, writing the change description or commit message, reviewing someone else's, review policy (approvals, OWNERS, readability), giving and receiving feedback.
 ---
 
 # Code Review (Google-style)

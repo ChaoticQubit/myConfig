@@ -1,10 +1,9 @@
 ---
 name: to-features
 description: >-
-  Expand one release markdown (usually from to-releases) into per-feature/epic markdowns:
-  problem, solution, user stories, acceptance criteria, out-of-scope, dependencies, open
-  questions. Use on "break this release into features", "what are the epics for v2",
-  "expand this release into specs", "turn this release into Linear epics".
+  Expand one release markdown into per-feature/epic markdowns: problem, solution, user
+  stories, acceptance criteria, out of scope, dependencies, open questions. Use on
+  "break this release into features/epics".
 ---
  
 # To Features

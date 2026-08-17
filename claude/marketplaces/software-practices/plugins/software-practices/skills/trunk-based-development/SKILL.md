@@ -1,7 +1,7 @@
 ---
 name: trunk-based-development
 description: >
-  Apply Google's trunk-based development and version-control practices from "Software Engineering at Google" (ch. 16, 18, 22). Use when the user is setting up a branching strategy, asks whether to create a feature branch, wants to push directly to main/trunk, mentions merge conflicts or long-lived branches, manages a monorepo or the One-Version Rule, plans release branches, or wants to break a big change into small commits. Trigger phrases: "trunk-based", "should I branch", "feature branch", "push to main", "merge strategy", "one version rule", "monorepo", "large-scale change".
+  Trunk-based development and version control (SWE at Google ch. 16, 18, 22): branching and merge strategy, whether to cut a feature branch, pushing to main, long-lived branches and merge conflicts, monorepo and the One-Version Rule, release branches, large-scale change split into small commits.
 ---
 
 # Trunk-Based Development (Google-style)

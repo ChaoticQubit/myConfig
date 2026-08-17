@@ -1,10 +1,8 @@
 ---
 name: linear-method
 description: >-
-  Linear Method principles for project tracking and product building. Use when writing
-  issues, specs, or project briefs, planning cycles or roadmaps, managing or prioritizing
-  a backlog, designing team workflow, or asking about product-development best practice.
-  Triggers: "Linear Method", issue writing, cycle planning, product direction.
+  Linear Method for issues, specs, project briefs, cycle planning, backlog and
+  prioritization, roadmaps, team workflow, product direction.
 ---
  
 # SKILL.md — The Linear Method: Project Tracking & Product Building

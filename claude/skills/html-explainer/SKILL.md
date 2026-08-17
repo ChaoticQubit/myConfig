@@ -1,12 +1,10 @@
 ---
 name: html-explainer
 description: >-
-  Turn a document, article, README, spec, PDF, course, or URL into a visual-first
-  single-file interactive HTML page (Thariq Shihipar style): icon cards, diagrams,
-  flows, stat tiles, timelines, flip cards, simulations, detail behind hover/expand.
-  Use on "make an HTML version", "create an explainer", "make this visual", "Thariq
-  style", "interactive version", or when the user wants content understood with less
-  reading, even if they never say HTML.
+  Turn a document, article, README, spec, PDF or URL into a visual-first single-file
+  interactive HTML page (Thariq Shihipar style): icon cards, diagrams, flows, stat
+  tiles, timelines, simulations. Use on "make an HTML version", "create an explainer",
+  "make this visual".
 ---
 
 # HTML Explainer — visual-first interactive pages

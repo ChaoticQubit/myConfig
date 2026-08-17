@@ -1,8 +1,8 @@
 ---
 name: tiger-style
 description: >-
-  TigerBeetle engineering discipline (assertions, bounds, shape, naming) for Go/TypeScript/Python
-  services. Priority order: safety, performance, developer experience. Third leg of gate 4, after
+  TigerBeetle discipline (assertions, bounds, shape, naming) for Go/TypeScript/Python.
+  Safety, then performance, then developer experience. Third leg of gate 4, after
   software-practices and ponytail, on every build/change.
 ---
 

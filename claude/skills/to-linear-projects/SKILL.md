@@ -1,10 +1,9 @@
 ---
 name: to-linear-projects
 description: >-
-  Split a product scope into one markdown per Linear project (area of work: auth, payments,
-  frontend, infra), each with title, description, goals, milestones, owner, color,
-  dependencies. Use on "set up Linear projects for this", "group this into projects",
-  "what projects should I create in Linear".
+  Split a product scope into one markdown per Linear project (auth, payments, frontend,
+  infra): title, description, goals, milestones, owner, color, dependencies. Use on
+  "set up Linear projects for this".
 ---
  
 # To Linear Projects
