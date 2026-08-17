@@ -57,14 +57,33 @@ tiger-style vs ponytail conflict (assertion-density floor, zero tech debt) -> **
 - Bugs -> `superpowers:systematic-debugging` before proposing fixes.
 - software-practices stays active through implementation: land trunk-based, flag incomplete work, test per testing sub-skill, review per code-review before merge.
 
-## 6. Review - before PR, loop until clean
+## 6. Review - both gates in parallel, on one frozen commit, twice at most
 
-After gate 5, before any push or PR. Both must come back clean:
+After gate 5, before any push or PR. **Never run the two gates in sequence.** Sequential is
+what does not converge: DeepSec reads commit X, the fixes produce X+1, `/code-review` then reads
+X+1 - a tree no reviewer has seen - and finds new things, whose fixes produce an X+2 DeepSec has
+never seen. Each gate reviews the other's edits, forever. Review output is a function of the
+diff and every fix changes the diff, so "until zero open comments" is an instruction to loop
+until the budget runs out. It has cost an evening and $250 on a single ticket.
 
-- **Security**: DeepSec, `--model-auth local` (rides the Claude subscription, no per-token bill). Scope to changes: `process --filter <changed paths>`, then `revalidate` before treating a finding as real rather than a false positive.
-- **Code review**: built-in `/code-review`.
+1. **Freeze the commit.** Note the SHA. Nothing is edited while a review is running - editing
+   the tree under a reviewer invalidates its verdicts and it will report against a mix.
+2. **Run both against that one SHA, in parallel, in the same message.**
+   - **Security**: DeepSec. Scope to changes: `process --diff <base-ref> --agent claude --model <model>`.
+     Verify the run **actually ran**: it exits `0` on an unknown option, so a typo'd flag reports
+     success having done nothing. A run that produced no findings and no analyses did not run.
+   - **Code review**: built-in `/code-review`.
+3. **Merge both outputs into one triage list.** Where they contradict each other, read the code
+   once and decide; never re-run a gate to break a tie.
+4. **Fix critical and high only** - plus any genuine security or data-loss defect whatever label
+   it carries. Medium, low, style, nitpicks, "consider extracting this" do not block a merge.
+5. **One confirm round, at most**, and only when step 4 changed something substantial. It asks
+   whether the fixes opened something worse. It is not a fresh hunt. **Two rounds is the ceiling** -
+   a third needs asking first.
+6. Record the run id on the ticket, cut the leftovers into the backlog as a batch, raise the PR.
 
-Any finding -> fix -> re-run both -> repeat until zero open comments. Only then raise PR. A finding restarts at **gate 3**, not gate 5: new information about the design, not a typo to patch in place.
+A critical or high finding that is really a design error restarts at **gate 3**. Everything else
+is patched in place or filed.
 
 ## 7. Update graph
 
