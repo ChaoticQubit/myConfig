@@ -115,6 +115,7 @@ Ranked. Lower never wins a tradeoff against higher.
 
 # Global agent instructions
 
+- **Prompt carries both a question and a task -> answer the question FIRST, in the same reply, before the first tool call.** The user sits blocked waiting on the answer while the work runs; deferring it until the task finishes wastes their time. Applies to any question asked alongside the work - explanation, comparison, "is X done", "why did Y happen" - and a one-line answer still goes first. Answer needs a lookup? Do the minimum reads to answer, answer, then start the task. Never park the answer at the end of the turn, never fold it into the completion report.
 - Never use em dash. Use "-".
 - Never add agent name as commit co-author.
 - Never edit auto-generated files, incl. `CHANGELOG.md`.
