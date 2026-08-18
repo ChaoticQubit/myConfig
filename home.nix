@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/.dotfiles";
@@ -19,6 +19,15 @@ let
   uvTools = [
     "graphifyy"
   ];
+  sharedSkills = builtins.attrNames (
+    lib.filterAttrs (_: kind: kind == "directory") (builtins.readDir ./agents/skills)
+  );
+  codexSkillLinks = lib.listToAttrs (
+    map (skill: lib.nameValuePair ".codex/skills/${skill}" {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/skills/${skill}";
+      force = true;
+    }) sharedSkills
+  );
 in
 
 {
@@ -188,20 +197,30 @@ in
   xdg.configFile."nvim".source = ./nvim;
   xdg.configFile."wezterm".source = ./wezterm;
   xdg.configFile."herdr/config.toml".source = ./herdr/config.toml;
-  home.file.".claude/settings.json" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/settings.json";
-    force = true;
-  };
-  home.file.".claude/skills" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/skills";
-    force = true;
-  };
-  home.file.".claude/hooks" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/hooks";
-    force = true;
-  };
-  home.file.".claude/CLAUDE.md" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
-    force = true;
+  home.file = codexSkillLinks // {
+    ".claude/settings.json" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/settings.json";
+      force = true;
+    };
+    ".claude/skills" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/skills";
+      force = true;
+    };
+    ".claude/hooks" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/hooks";
+      force = true;
+    };
+    ".claude/CLAUDE.md" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
+      force = true;
+    };
+    ".codex/AGENTS.md" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
+      force = true;
+    };
+    ".codex/hooks.json" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/codex/hooks.json";
+      force = true;
+    };
   };
 }
