@@ -39,6 +39,7 @@
       "wezterm"
       "claude-code@latest"
       "entireio/tap/entire"
+      "codex"
     ];
 
     taps = [
