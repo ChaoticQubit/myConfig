@@ -189,19 +189,19 @@ in
   xdg.configFile."wezterm".source = ./wezterm;
   xdg.configFile."herdr/config.toml".source = ./herdr/config.toml;
   home.file.".claude/settings.json" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/settings.json";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/settings.json";
     force = true;
   };
   home.file.".claude/skills" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/skills";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/skills";
     force = true;
   };
   home.file.".claude/hooks" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/hooks";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/hooks";
     force = true;
   };
   home.file.".claude/CLAUDE.md" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/claude/CLAUDE.md";
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
     force = true;
   };
 }

@@ -99,13 +99,13 @@
     "software-practices": {
       "source": {
         "source": "directory",
-        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/software-practices"
+        "path": "/Users/chaoticqubit/myConfig/dotfiles/agents/marketplaces/software-practices"
       }
     },
     "deep-docs": {
       "source": {
         "source": "directory",
-        "path": "/Users/chaoticqubit/myConfig/dotfiles/claude/marketplaces/deep-docs"
+        "path": "/Users/chaoticqubit/myConfig/dotfiles/agents/marketplaces/deep-docs"
       }
     }
   },
