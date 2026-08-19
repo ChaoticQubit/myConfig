@@ -197,6 +197,10 @@ in
   xdg.configFile."nvim".source = ./nvim;
   xdg.configFile."wezterm".source = ./wezterm;
   xdg.configFile."herdr/config.toml".source = ./herdr/config.toml;
+  xdg.configFile."ccstatusline/settings.json" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/ccstatusline/settings.json";
+    force = true;
+  };
   home.file = codexSkillLinks // {
     ".claude/settings.json" = {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/settings.json";
