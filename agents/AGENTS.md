@@ -34,6 +34,17 @@ Request to build/add/change/fix -> run **grill-me** before design or code. Defau
 
 Only exception: trivial fully-specified mechanical edit (typo, exact rename user dictated). Anything carrying a design decision -> grill-me.
 
+- When grill-me completes, immediately persist the decision-relevant context in `docs/agent-decisions.md` before gate 4 or any long-running tool work.
+- Each entry includes the date, task or ticket, topic, goal, constraints, decisions, rejected alternatives, risks, acceptance criteria, and unresolved questions.
+- Append to or update the relevant topic section. Never erase prior decisions. Mark changed decisions as superseded with the replacement and reason.
+- If the durable record cannot be written, stop and report the failure before continuing.
+- Update available agent memory with a short pointer or stable preference only after the document is written. The document is the source of truth.
+
+### 3.1 Context durability
+
+- Claude uses `CLAUDE_CODE_AUTO_COMPACT_WINDOW=400000`, which targets 40% of the configured 1M context window.
+- Codex has no repository-configured percentage threshold. Treat its native compaction as lossy for task-specific decisions and reread the relevant sections of `docs/agent-decisions.md` after compaction.
+
 ## 4. Design - software-practices, ponytail, tiger-style. That order, every time
 
 1. **software-practices = how the work gets done well and landed.** Name applicable practices, pull the sub-skill: `software-practices:engineering-principles` (design/architecture tradeoffs, tech debt, maintainability, build/CI - default advisor), `software-practices:trunk-based-development`, `software-practices:feature-flags` (gate incomplete or risky work when project has a flag system), `software-practices:testing`, `software-practices:code-review`.
