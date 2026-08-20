@@ -226,5 +226,9 @@ in
       source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/codex/hooks.json";
       force = true;
     };
+    ".codex/config.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/codex/config.toml";
+      force = true;
+    };
   };
 }
