@@ -1,19 +1,56 @@
-model = "gpt-5.6-luna"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "max"
+model_context_window = 872000
+model_auto_compact_token_limit = 250000
 model_verbosity = "medium"
 approvals_reviewer = "auto_review"
 hide_agent_reasoning = true
 show_raw_agent_reasoning = false
+notify = [ "/Users/chaoticqubit/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended" ]
+service_tier = "priority"
+sandbox_mode = "workspace-write"
+web_search = "live"
+model_reasoning_summary = "concise"
+personality = "pragmatic"
 
 [features]
 hooks = true
+js_repl = false
+memories = true
 
 [tui]
-status_line = ["model", "reasoning", "project-name", "git-branch", "branch-changes", "weekly-limit", "used-tokens", "context-used", "approval-mode"]
+status_line = [ "model", "reasoning", "current-dir", "git-branch", "branch-changes", "weekly-limit", "context-used", "approval-mode" ]
 status_line_use_colors = true
 
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/chaoticqubit/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/chaoticqubit/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_TINYSKY_ENABLED = "0"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.818.41509"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.818.41509/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = [ "mcp" ]
+cwd = "."
+enabled = false
 
 [marketplaces.deep-docs]
 source_type = "local"
@@ -23,8 +60,188 @@ source = "/Users/chaoticqubit/.dotfiles/agents/marketplaces/deep-docs"
 source_type = "local"
 source = "/Users/chaoticqubit/.dotfiles/agents/marketplaces/software-practices"
 
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/chaoticqubit/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.claude-plugins-official]
+last_updated = "2026-08-22T18:11:47Z"
+last_revision = "340e33aef211d95769d252324854497af871dafe"
+source_type = "git"
+source = "https://github.com/anthropics/claude-plugins-official.git"
+
+[marketplaces.context-mode]
+last_updated = "2026-08-22T18:11:52Z"
+last_revision = "43667c01514e627f2bb475f46f0e738a28c28ed0"
+source_type = "git"
+source = "https://github.com/mksglu/context-mode.git"
+
+[marketplaces.claude-cowork]
+source_type = "local"
+source = "/Users/chaoticqubit/.codex/plugins/cache/claude-cowork"
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = "/Users/chaoticqubit/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
 [plugins."deep-docs@deep-docs"]
 enabled = true
 
 [plugins."software-practices@software-practices"]
 enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."superpowers@claude-plugins-official"]
+enabled = true
+
+[plugins."context-mode@context-mode"]
+enabled = true
+
+[plugins."anthropic-skills@claude-cowork"]
+enabled = true
+
+[plugins."caveman@claude-cowork"]
+enabled = true
+
+[plugins."cowork-plugin-management@claude-cowork"]
+enabled = true
+
+[plugins."deep-docs@claude-cowork"]
+enabled = true
+
+[plugins."design@claude-cowork"]
+enabled = true
+
+[plugins."pdf-viewer@claude-cowork"]
+enabled = true
+
+[plugins."software-practices@claude-cowork"]
+enabled = true
+
+[plugins."trip-planner-pro@claude-cowork"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = false
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = false
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = false
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[projects."/Users/chaoticqubit/Code/ScholarScope"]
+trust_level = "trusted"
+
+[projects."/Users/chaoticqubit/Desktop/DataVeritas"]
+trust_level = "trusted"
+
+[projects."/Users/chaoticqubit/Documents/Codex/2026-08-22/realtime-voice-chat"]
+trust_level = "trusted"
+
+[projects."/Users/chaoticqubit/Daisy"]
+trust_level = "trusted"
+
+[hooks.state]
+
+[hooks.state."/Users/chaoticqubit/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:42ad5843ba79bdd68be42269ac7b513889a767e052dda6c6c28079a53af982ee"
+
+[hooks.state."/Users/chaoticqubit/.codex/hooks.json:session_start:1:0"]
+trusted_hash = "sha256:49445960d4dd688a8373770dfb54c431771529db20e8935b69abe290f0849b66"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:f0660ca5df5be23ce4cc9fc584cec601798e7eb72daade5c0d4d4d7c9e85575e"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:64596c4f538bc9a9ff43b3c365940b50855656403478d3dc9abb35d2334fedc4"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:post_tool_use:1:0"]
+trusted_hash = "sha256:4f755c9d8a0b1fde775c70a32bb4e2eee4a265a50c376a31c4b8e3b749286c72"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:2cfc635eb449146c53f97fdbb894eb6a5ee2ac78dd4ded19192be8ecc4fb2bc8"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:session_end:0:0"]
+trusted_hash = "sha256:f74a91fd46560cb608afd64ae326d69b0dcc97a1af229ea14e5fa8bedd9d857d"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:cfc44df5867771d598750eb450da6f972390c5106be6759b146991dbee778698"
+
+[hooks.state."/Users/chaoticqubit/Daisy/.codex/hooks.json:stop:0:0"]
+trusted_hash = "sha256:1eb43e102a80ae3369d7683a52a73e1403404141577f69f3992b8a4e84407cd6"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:56da0c4249dc7af048f42ae458fb83931926a8af41ec6fab5ae819ff3a8c83ae"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:0d237345f8d46110d36cd0ef08e79b55fa151a07691dee36d492aa6f64bc0efd"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:pre_compact:0:0"]
+trusted_hash = "sha256:ac1f9e5eb71ca262492150381d8f078b897056fc691f9973fc56d7b1b402e648"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:a6cc6a322d0931bdd68a5969e523cd71e6eedccab4850e8996c8948311173618"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:114549c484c131b94782d3424527dd1042d48bc3a8616a11299acdf60b112572"
+
+[hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:stop:0:0"]
+trusted_hash = "sha256:9205c1763e40c0256ab334e2e96c037c1cdf5b8bfaddba31ed19d93d3388586a"
+
+[shell_environment_policy]
+inherit = "core"
+
+[shell_environment_policy.set]
+CLAUDE_CODE_AUTO_COMPACT_WINDOW = "400000"
+CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1"
+CLAUDE_CODE_AUTO_CONNECT_IDE = "true"
+CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY = "1"
+
+[desktop]
+external-agent-import-sync-enabled = true
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = true
+realtimeVoiceScreenContextEnabled = true
+mac-menu-bar-enabled = false
+defaultTerminalLocation = "bottom"
+preventSleepWhileRunning = true
+show-context-window-usage = true
+usePointerCursors = false
+dock-icon-preference = "codex-system"
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
+selected-avatar-id = "hoots"
+avatar-overlay-mascot-width-px = 105
+followUpQueueMode = "queue"
+open-link-in-target-preference = "in-app-browser"
+git-branch-prefix = ""
+
+[sandbox_workspace_write]
+network_access = true
+
+[memories]
+generate_memories = true
+use_memories = true

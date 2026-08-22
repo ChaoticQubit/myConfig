@@ -43,7 +43,7 @@ Only exception: trivial fully-specified mechanical edit (typo, exact rename user
 ### 3.1 Context durability
 
 - Claude uses `CLAUDE_CODE_AUTO_COMPACT_WINDOW=400000`, which targets 40% of the configured 1M context window.
-- Codex has no repository-configured percentage threshold. Treat its native compaction as lossy for task-specific decisions and reread the relevant sections of `docs/agent-decisions.md` after compaction.
+- Codex uses `model_context_window = 872000` and `model_auto_compact_token_limit = 250000` in `agents/codex/config.toml`: compaction fires at 250k tokens, about 29% of the `gpt-5.6-sol` 872k maximum window. Codex has no percentage setting, so both values are absolute tokens and must be recomputed on a model change. Treat its native compaction as lossy for task-specific decisions and reread the relevant sections of `docs/agent-decisions.md` after compaction.
 
 ## 4. Design - software-practices, ponytail, tiger-style. That order, every time
 
