@@ -25,6 +25,10 @@ status_line_use_colors = true
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
 
+[mcp_servers.idea-reality]
+command = "uvx"
+args = [ "idea-reality-mcp" ]
+
 [mcp_servers.node_repl]
 args = []
 command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"

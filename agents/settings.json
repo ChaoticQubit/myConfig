@@ -79,12 +79,6 @@
       }
     ]
   },
-  "mcpServers": {
-    "idea-reality": {
-      "command": "uvx",
-      "args": ["idea-reality-mcp"]
-    }
-  },
   "statusLine": {
     "type": "command",
     "command": "ccstatusline",

@@ -19,6 +19,12 @@ let
   uvTools = [
     "graphifyy"
   ];
+  mcpServers = {
+    idea-reality = {
+      command = "/opt/homebrew/bin/uvx";
+      args = [ "idea-reality-mcp" ];
+    };
+  };
   sharedSkills = builtins.attrNames (
     lib.filterAttrs (_: kind: kind == "directory") (builtins.readDir ./agents/skills)
   );
@@ -92,6 +98,15 @@ in
     done
     printf '%s\n' $declared > "$manifest"
     export PATH="$hmPath"
+  '';
+
+  home.activation.mcpServers = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    export MCP_SERVERS_JSON=${lib.escapeShellArg (builtins.toJSON mcpServers)}
+    run mkdir -p "${managedState}"
+    run /usr/bin/python3 ${./agents/mcp-sync.py} \
+      "${managedState}/mcp-servers" \
+      "code=$HOME/.claude.json" \
+      "desktop=$HOME/Library/Application Support/Claude/claude_desktop_config.json"
   '';
 
   home.activation.imperativeTools = config.lib.dag.entryAfter [ "writeBoundary" ] ''
