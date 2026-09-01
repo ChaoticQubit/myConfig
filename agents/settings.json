@@ -5,6 +5,7 @@
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "true",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -78,6 +79,12 @@
       }
     ]
   },
+  "mcpServers": {
+    "idea-reality": {
+      "command": "uvx",
+      "args": ["idea-reality-mcp"]
+    }
+  },
   "statusLine": {
     "type": "command",
     "command": "ccstatusline",
@@ -119,13 +126,11 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "max",
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
-  "remoteControlAtStartup": false,
-  "model": "claude-fable-5[1m]"
+  "remoteControlAtStartup": false
 }
