@@ -12,9 +12,11 @@ let
     "quota-axi"
     "deepsec"
     "pnpm"
+    "@tauri-apps/cli"
   ];
   imperativeTools = [
     "ccwarriors"
+    "rusttoolchain"
   ];
   uvTools = [
     "graphifyy"
@@ -136,6 +138,20 @@ in
       rm -rf "$HOME/.ccwarriors" "$HOME/.claude-warriors"
     }
 
+    install_rusttoolchain() {
+      rustup="$(brew --prefix rustup)/bin/rustup"
+      if [ ! -x "$rustup" ]; then
+        echo "rustup is not installed yet (homebrew brews); rebuild once more after brew bundle has run"
+        return 0
+      fi
+      "$rustup" default stable
+      "$rustup" update stable
+    }
+
+    uninstall_rusttoolchain() {
+      rm -rf "$HOME/.rustup" "$HOME/.cargo"
+    }
+
     declared="${builtins.concatStringsSep " " imperativeTools}"
     manifest="${managedState}/imperative-tools"
     run mkdir -p "${managedState}"
@@ -184,6 +200,7 @@ in
     };
     initContent = ''
       bindkey '^f' autosuggest-accept
+      export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
 
       commit() {
 	git commit -m "$*"

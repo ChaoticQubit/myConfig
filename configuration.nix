@@ -73,6 +73,9 @@
       "go"
       "delve"
       "uv"
+      "rustup"
+      "nuclei"
+      "llama.cpp"
     ];
   };
 }

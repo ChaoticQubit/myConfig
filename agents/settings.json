@@ -5,7 +5,7 @@
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "true",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5-1[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -126,5 +126,10 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
-  "remoteControlAtStartup": false
+  "remoteControlAtStartup": false,
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    }
+  }
 }
