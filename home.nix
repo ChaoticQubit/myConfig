@@ -13,6 +13,7 @@ let
     "deepsec"
     "pnpm"
     "@tauri-apps/cli"
+    "@openai/codex-security"
   ];
   imperativeTools = [
     "ccwarriors"

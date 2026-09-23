@@ -5,7 +5,7 @@
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "true",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -120,16 +120,19 @@
     }
   },
   "alwaysThinkingEnabled": true,
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5": {
+      "effortLevel": "xhigh"
+    }
+  },
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
-  "remoteControlAtStartup": false,
-  "modelSettings": {
-    "claude-fable-5-1": {
-      "effortLevel": "high"
-    }
-  }
+  "remoteControlAtStartup": false
 }
