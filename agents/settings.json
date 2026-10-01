@@ -120,19 +120,22 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "modelSettings": {
-    "claude-fable-5-1": {
-      "effortLevel": "high"
-    },
-    "claude-opus-5": {
-      "effortLevel": "xhigh"
-    }
-  },
   "tui": "fullscreen",
   "autoMemoryEnabled": true,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "editorMode": "normal",
-  "remoteControlAtStartup": false
+  "remoteControlAtStartup": false,
+  "modelSettings": {
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "xhigh"
+    }
+  }
 }

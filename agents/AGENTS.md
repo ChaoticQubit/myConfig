@@ -68,33 +68,76 @@ tiger-style vs ponytail conflict (assertion-density floor, zero tech debt) -> **
 - Bugs -> `superpowers:systematic-debugging` before proposing fixes.
 - software-practices stays active through implementation: land trunk-based, flag incomplete work, test per testing sub-skill, review per code-review before merge.
 
-## 6. Review - both gates in parallel, on one frozen commit, twice at most
+## 6. Review - code review and one security review, in parallel, twice at most
 
-After gate 5, before any push or PR. **Never run the two gates in sequence.** Sequential is
-what does not converge: DeepSec reads commit X, the fixes produce X+1, `/code-review` then reads
-X+1 - a tree no reviewer has seen - and finds new things, whose fixes produce an X+2 DeepSec has
-never seen. Each gate reviews the other's edits, forever. Review output is a function of the
-diff and every fix changes the diff, so "until zero open comments" is an instruction to loop
-until the budget runs out. It has cost an evening and $250 on a single ticket.
+After gate 5, before any push or PR, run exactly two review tracks: normal code review and
+Codex Security with DeepSec evidence. DeepSec collects candidates and supplies existing
+findings; Codex Security owns security discovery, validation, coverage, and the final report.
+Do not add a separate DeepSec AI review or a third Codex Security pass. This experimental
+default replaces the older DeepSec-plus-Codex-Security review split.
 
-1. **Freeze the commit.** Note the SHA. Nothing is edited while a review is running - editing
-   the tree under a reviewer invalidates its verdicts and it will report against a mix.
-2. **Run both against that one SHA, in parallel, in the same message.**
-   - **Security**: DeepSec. Scope to changes: `process --diff <base-ref> --agent claude --model <model>`.
-     Verify the run **actually ran**: it exits `0` on an unknown option, so a typo'd flag reports
-     success having done nothing. A run that produced no findings and no analyses did not run.
-   - **Code review**: built-in `/code-review`.
-3. **Merge both outputs into one triage list.** Where they contradict each other, read the code
-   once and decide; never re-run a gate to break a tie.
-4. **Fix critical and high only** - plus any genuine security or data-loss defect whatever label
-   it carries. Medium, low, style, nitpicks, "consider extracting this" do not block a merge.
-5. **One confirm round, at most**, and only when step 4 changed something substantial. It asks
-   whether the fixes opened something worse. It is not a fresh hunt. **Two rounds is the ceiling** -
-   a third needs asking first.
-6. Record the run id on the ticket, cut the leftovers into the backlog as a batch, raise the PR.
+1. **Freeze the target.** Record the repository, base SHA, head SHA, and authorized scope.
+   Nothing is edited while either reviewer runs. Both tracks must review the same source.
+   Committed-diff scans require a clean checkout at the frozen head; use an isolated worktree
+   when the working checkout is dirty. Never stash or discard unrelated user changes for a scan.
+2. **Prepare the DeepSec evidence without discarding history.** Before refreshing scanner state,
+   snapshot the existing project candidate records, findings, analysis history, and run metadata
+   into a dedicated evidence directory outside the target checkout. Export all findings with
+   `deepsec export --project-id <project-id> --format json --include-resolved --out <evidence>/findings-before.json`.
+   Do not filter by severity, date, agent, or true-positive status. Confirm the project ID/root.
+   Run deterministic discovery with `deepsec scan --project-id <project-id> --root <frozen-checkout>`
+   from the existing DeepSec workspace, then snapshot the refreshed candidates separately.
+   `export` exports findings, not every raw candidate: preserve both sources. No fresh
+   `deepsec process` or AI revalidation pass. If setup or artifacts are unavailable, report
+   the gap; do not silently call the combined workflow complete or install anything.
+3. **Run both tracks against the frozen target in parallel.**
+   - **Code review:** built-in `/code-review`, or the host's normal code-review capability.
+   - **Security:** Codex Security, with Daybreak Blue (`gpt-daybreak-blue-latest`), `xhigh`
+     effort, and ChatGPT authentication. Use `codex-security:security-diff-scan` for changes
+     or `codex-security:security-scan` for an explicitly requested repository/path audit.
+     Read `~/myConfig/dotfiles/agents/security-review-prompt.md` and supply the entire evidence
+     directory as scan context. A desktop scan uses the selected host model: confirm the
+     actual model rather than assuming this instruction switches it. The installed CLI
+     can select it explicitly using the command below. These are alternative launch paths,
+     not two scans. DeepSec's Codex adapter disables plugins; `--agent codex` alone is not
+     Codex Security integration. If model/auth access fails, report it without silently
+     falling back to Claude, another model, or API-key billing.
+4. **Account for every input.** Keep immutable raw evidence and a manifest with source IDs,
+   source revision/run when available, hashes, and counts. Codex Security must examine every
+   handed-off finding and candidate and record confirmed, refuted, duplicate, already-fixed,
+   or deferred with evidence. Duplicates retain their source IDs and link to the survivor.
+   Stale or out-of-scope items remain explicit deferred entries; do not silently expand a
+   diff review into a full audit. Review the authorized source independently of matcher hits.
+   Missing inputs or incomplete dispositions mean partial coverage, not a clean result.
+5. **Merge both reports into one triage list.** Resolve contradictions by inspecting the code
+   once. Fix critical/high findings and any genuine security or data-loss defect regardless
+   of label. Medium/low/style suggestions do not otherwise block merge. A critical/high
+   design error restarts gate 3; other fixes are patched in place or filed.
+6. **One confirm round at most**, only after substantial fixes. Review the new frozen target
+   for regressions from those fixes. Two rounds is the ceiling; a third needs asking first.
+7. **Retain evidence and measure the experiment.** Record scan ID, actual model, target SHAs,
+   evidence manifest, input/disposition counts, validated findings by source, independent
+   Codex Security discoveries, coverage gaps, elapsed time, and usage/cost when reported.
+   A successful exit or empty findings list alone does not prove a completed review: check
+   the scan manifest, coverage, final report, and evidence ledger. Record IDs on the ticket,
+   batch deferred work into the backlog, then raise the PR. Compare results with prior
+   reviewed baselines where available; do not run extra reviews solely to manufacture a
+   comparison or claim improved security before evidence exists.
 
-A critical or high finding that is really a design error restarts at **gate 3**. Everything else
-is patched in place or filed.
+CLI launch for a committed diff, with shell variables set to the verified target and evidence paths:
+
+```sh
+codex-security scan "$review_repo" --diff "$review_base_sha" --head "$review_head_sha" \
+  --auth chatgpt --model gpt-daybreak-blue-latest --effort xhigh \
+  --knowledge-base "$review_evidence_dir" \
+  --scan-prompt-file "$HOME/myConfig/dotfiles/agents/security-review-prompt.md" \
+  --output-dir "$review_output_dir"
+```
+
+Use a fresh output directory outside the checkout. Add `--dry-run` to verify local input
+resolution without starting a review; it does not verify authentication or live inference.
+For full repository/path audits omit `--diff`/`--head` and explicitly select the authorized
+scope. Do not use Deep mode for routine diffs. Preserve project-specific manual-test gates.
 
 ## 7. Update graph
 
