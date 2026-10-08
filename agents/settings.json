@@ -37,7 +37,7 @@
         ]
       },
       {
-        "matcher": "*",
+        "matcher": "^(startup|resume|clear|compact|fork)$",
         "hooks": [
           {
             "type": "command",
@@ -120,13 +120,6 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "tui": "fullscreen",
-  "autoMemoryEnabled": true,
-  "showThinkingSummaries": true,
-  "skipDangerousModePermissionPrompt": true,
-  "skipWorkflowUsageWarning": true,
-  "editorMode": "normal",
-  "remoteControlAtStartup": false,
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "high"
@@ -137,5 +130,40 @@
     "claude-opus-5-5": {
       "effortLevel": "xhigh"
     }
+  },
+  "tui": "fullscreen",
+  "autoMemoryEnabled": true,
+  "showThinkingSummaries": true,
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "editorMode": "normal",
+  "remoteControlAtStartup": false,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: Azure (ARM_CLIENT_ID/ARM_TENANT_ID/ARM_SUBSCRIPTION_ID in .env.example, infra/terraform/release/keyvault.tf), plus Vercel and Neon (infra/terraform/site/vercel.tf, neon.tf)",
+      "**Repository visibility**: Private (ChaoticQubit/ScholarScope, verified via gh)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Azure Key Vault (infra/terraform/release/keyvault.tf); VAULT_ADDR marker present but unconfirmed as active secrets backend; CI secrets referenced by name only (GITHUB_TOKEN, LINEAR_API_KEY, NEON_API_KEY, TESTOMAT_PROJECT_TOKEN, TF_TOKEN_APP_TERRAFORM_IO, VERCEL_API_TOKEN) — values not accessible",
+      "**Default / protected branches**: Default branch `master`; `master` is protected; rulesets `deploy-history-checks` and `deploy-restrictions` are active (rulesets may protect beyond classic branch protection)",
+      "**CI/CD deploy targets**: Azure (via Terraform in infra/terraform/release, foundation, bootstrap, witness), Vercel and Neon (infra/terraform/site) — all scoped to this repo's own infra config",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: ChaoticQubit/ScholarScope (origin: https://github.com/ChaoticQubit/ScholarScope.git) and its remote only",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: `.env`, `.env.example` (template only), `/ktkey`, `.secrets-ruleset.toml`, `internal/keycrypto/secret.go` and `secret_test.go`, `docs/secrets-gate.md`, Terraform state/config under `infra/terraform/**` (especially `release/keyvault.tf`, `release/identity.tf`, `release/owner.tf`) — share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment; note `docs/superpowers/plans/2026-10-05-sch-392-prod-backups.md` references prod backups planning",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment; `infra/terraform/release/*` and `infra/terraform/foundation/*` hold identity, keyvault and ownership resources and warrant extra caution",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development",
+      "**Trusted repo**: ChaoticQubit/ScholarScope (private) at /Users/chaoticqubit/Code/ScholarScope, and its origin remote",
+      "**Org-specific CLIs**: None configured — `gh-axi` and `npx` appeared once each in this project's transcripts, too infrequent to treat as routine org tooling"
+    ]
   }
 }

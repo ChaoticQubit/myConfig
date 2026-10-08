@@ -54,8 +54,8 @@ NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.928.20755"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.928.20755/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.1002.52244"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.1002.52244/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 SKY_CUA_SERVICE_PATH = "/Users/chaoticqubit/.codex/computer-use/Codex Computer Use.app"
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
@@ -276,6 +276,7 @@ followUpQueueMode = "queue"
 open-link-in-target-preference = "in-app-browser"
 git-branch-prefix = ""
 agent-usage-reset-enabled = true
+sidebar-show-projects-in-recents = false
 
 [desktop.daybreak-enabled]
 accountId = "f4f68319-5fce-4f02-adf1-dfa336f7d55a"
