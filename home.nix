@@ -251,6 +251,10 @@ in
       source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
       force = true;
     };
+    ".claude/.i-have-adhd-always" = {
+      text = "";
+      force = true;
+    };
     ".codex/AGENTS.md" = {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/AGENTS.md";
       force = true;

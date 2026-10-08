@@ -12,6 +12,24 @@ sandbox_mode = "workspace-write"
 web_search = "live"
 model_reasoning_summary = "concise"
 personality = "pragmatic"
+developer_instructions = '''
+## Output style
+
+The reader has ADHD. Shape every response so it can be acted on:
+
+1. Lead with the answer or next action: command, path, or snippet first.
+2. Number multi-step work; one bounded action per step.
+3. End with one next action doable in under two minutes.
+4. Finish the current issue before raising a new one.
+5. Restate progress each turn ("step 3 of 5 done").
+6. Give time estimates in concrete units, never "a bit".
+7. After a change, show what now works.
+8. Errors: state location, cause, and fix. No drama.
+9. Cap lists to 5 items.
+10. No preamble, no recaps, no closers.
+
+Exceptions: explain fully when asked to explain. Confirm before destructive actions. After three failed fixes, stop and name the doubtful assumption. If the request is ambiguous, ask one short question.
+'''
 
 [features]
 hooks = true
@@ -97,6 +115,16 @@ source = "/Users/chaoticqubit/.codex/plugins/cache/claude-cowork"
 source_type = "local"
 source = "/Users/chaoticqubit/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
+[marketplaces.i-have-adhd]
+source_type = "git"
+source = "https://github.com/ayghri/i-have-adhd.git"
+ref = "main"
+
+[marketplaces.taste-skill]
+source_type = "git"
+source = "https://github.com/Leonxlnx/taste-skill.git"
+ref = "main"
+
 [plugins."deep-docs@deep-docs"]
 enabled = true
 
@@ -167,6 +195,12 @@ enabled = true
 enabled = true
 
 [plugins."code-review@openai-bundled"]
+enabled = true
+
+[plugins."i-have-adhd@i-have-adhd"]
+enabled = true
+
+[plugins."taste-skill@taste-skill"]
 enabled = true
 
 [projects."/Users/chaoticqubit/Code/ScholarScope"]

@@ -91,7 +91,9 @@
     "ponytail@ponytail": false,
     "software-practices@software-practices": true,
     "deep-docs@deep-docs": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "i-have-adhd@i-have-adhd": true,
+    "taste-skill@taste-skill": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -116,6 +118,18 @@
       "source": {
         "source": "directory",
         "path": "/Users/chaoticqubit/myConfig/dotfiles/agents/marketplaces/deep-docs"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
+    },
+    "taste-skill": {
+      "source": {
+        "source": "github",
+        "repo": "Leonxlnx/taste-skill"
       }
     }
   },
