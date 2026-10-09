@@ -1,0 +1,9 @@
+{
+  "name": "session-modes",
+  "version": "0.1.0",
+  "description": "Lists the session modes a hook switched on (adhd, caveman, superpowers, context-mode) at the end of the prompt hint line",
+  "author": {
+    "name": "ChaoticQubit"
+  },
+  "types": "./types/index.d.ts"
+}

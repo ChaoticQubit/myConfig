@@ -93,7 +93,8 @@
     "deep-docs@deep-docs": true,
     "superpowers@claude-plugins-official": true,
     "i-have-adhd@i-have-adhd": true,
-    "taste-skill@taste-skill": true
+    "taste-skill@taste-skill": true,
+    "session-modes@agent-mods": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -130,6 +131,12 @@
       "source": {
         "source": "github",
         "repo": "Leonxlnx/taste-skill"
+      }
+    },
+    "agent-mods": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/chaoticqubit/myConfig/dotfiles/agents/marketplaces/agent-mods"
       }
     }
   },
@@ -179,5 +186,6 @@
       "**Trusted repo**: ChaoticQubit/ScholarScope (private) at /Users/chaoticqubit/Code/ScholarScope, and its origin remote",
       "**Org-specific CLIs**: None configured — `gh-axi` and `npx` appeared once each in this project's transcripts, too infrequent to treat as routine org tooling"
     ]
-  }
+  },
+  "theme": "dark"
 }

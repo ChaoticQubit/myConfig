@@ -12,4 +12,7 @@ ln -sfn "$DIR" ~/.dotfiles
 ( cd "$DIR" && nix flake update nix-homebrew )
 brew trust --formula hashicorp/tap/terraform
 brew trust --tap entireio/tap
-exec sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ~/.dotfiles#myMac
+if DARWIN_REBUILD="$(command -v darwin-rebuild)"; then
+  exec sudo -H "$DARWIN_REBUILD" switch --flake "$DIR#myMac"
+fi
+exec sudo -H nix run "$DIR#darwin-rebuild" -- switch --flake "$DIR#myMac"

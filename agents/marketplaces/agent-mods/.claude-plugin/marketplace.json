@@ -1,0 +1,24 @@
+{
+  "name": "agent-mods",
+  "owner": {
+    "name": "Arman Singhal (ChaoticQubit)"
+  },
+  "metadata": {
+    "description": "Claude Code mods: a launch progress pane and the session modes list.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "launch-progress",
+      "source": "./plugins/launch-progress",
+      "description": "Side pane with launch progress bars per area from .claude/launch-progress.json; click a bar for item statuses.",
+      "version": "0.1.0"
+    },
+    {
+      "name": "session-modes",
+      "source": "./plugins/session-modes",
+      "description": "Lists the session modes a hook switched on at the end of the prompt hint line.",
+      "version": "0.1.0"
+    }
+  ]
+}

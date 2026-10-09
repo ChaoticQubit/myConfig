@@ -1,0 +1,9 @@
+{
+  "name": "launch-progress",
+  "version": "0.1.0",
+  "description": "Side pane with launch progress bars per area from .claude/launch-progress.json; click a bar for item statuses",
+  "author": {
+    "name": "ChaoticQubit"
+  },
+  "types": "./types/index.d.ts"
+}

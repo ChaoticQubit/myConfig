@@ -47,6 +47,7 @@ theme = "coldark-cold"
 
 [tui.model_availability_nux]
 gpt-6-astra = 4
+"gpt-6.1-sol" = 1
 
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
@@ -125,6 +126,10 @@ source_type = "git"
 source = "https://github.com/Leonxlnx/taste-skill.git"
 ref = "main"
 
+[marketplaces.agent-mods]
+source_type = "local"
+source = "/Users/chaoticqubit/myConfig/dotfiles/agents/marketplaces/agent-mods"
+
 [plugins."deep-docs@deep-docs"]
 enabled = true
 
@@ -201,6 +206,9 @@ enabled = true
 enabled = true
 
 [plugins."taste-skill@taste-skill"]
+enabled = true
+
+[plugins."session-modes@agent-mods"]
 enabled = true
 
 [projects."/Users/chaoticqubit/Code/ScholarScope"]
@@ -282,6 +290,9 @@ trusted_hash = "sha256:114549c484c131b94782d3424527dd1042d48bc3a8616a11299acdf60
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:stop:0:0"]
 trusted_hash = "sha256:9205c1763e40c0256ab334e2e96c037c1cdf5b8bfaddba31ed19d93d3388586a"
+
+[hooks.state."i-have-adhd@i-have-adhd:hooks/hooks.json:session_start:0:0"]
+trusted_hash = "sha256:f14f820a4bb04f568faf482695f08471d7ed733a25fd94181693a7be4f06a637"
 
 [shell_environment_policy]
 inherit = "core"

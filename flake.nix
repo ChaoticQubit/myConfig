@@ -15,6 +15,10 @@
   };
 
   outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, nix-homebrew }: {
+    packages = builtins.mapAttrs (_: packages: {
+      inherit (packages) darwin-rebuild;
+    }) nix-darwin.packages;
+
     darwinConfigurations."myMac" = nix-darwin.lib.darwinSystem {
       modules = [ 
         ./configuration.nix
