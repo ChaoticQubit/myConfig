@@ -1,4 +1,4 @@
-model = "gpt-6-astra"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "xhigh"
 model_context_window = 872000
 model_auto_compact_token_limit = 250000
@@ -47,7 +47,7 @@ theme = "coldark-cold"
 
 [tui.model_availability_nux]
 gpt-6-astra = 4
-"gpt-6.1-sol" = 1
+"gpt-6.1-sol" = 2
 
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
@@ -73,8 +73,8 @@ NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.1002.52244"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.1002.52244/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.1007.71326"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.1007.71326/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 SKY_CUA_SERVICE_PATH = "/Users/chaoticqubit/.codex/computer-use/Codex Computer Use.app"
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
@@ -199,9 +199,6 @@ enabled = true
 [plugins."unified-computer-use@openai-bundled"]
 enabled = true
 
-[plugins."code-review@openai-bundled"]
-enabled = true
-
 [plugins."i-have-adhd@i-have-adhd"]
 enabled = true
 
@@ -209,6 +206,12 @@ enabled = true
 enabled = true
 
 [plugins."session-modes@agent-mods"]
+enabled = true
+
+[plugins."code-review@openai-bundled"]
+enabled = true
+
+[plugins."rust-analyzer-lsp@claude-plugins-official"]
 enabled = true
 
 [projects."/Users/chaoticqubit/Code/ScholarScope"]
@@ -326,7 +329,7 @@ sidebar-show-projects-in-recents = false
 [desktop.daybreak-enabled]
 accountId = "f4f68319-5fce-4f02-adf1-dfa336f7d55a"
 userId = "user-0QOSw04yiC3mUuTKgKZRCMLX"
-enabled = true
+enabled = false
 
 [sandbox_workspace_write]
 network_access = true

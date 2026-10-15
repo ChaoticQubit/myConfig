@@ -6,19 +6,32 @@ local is_windows = os.getenv("OS") and os.getenv("OS"):lower():find("windows")
 local is_macos = wezterm.target_triple:lower():find("darwin") ~= nil
 
 wezterm.on('gui-startup', function(cmd)
-  local width_percent = 0.90
-  local height_percent = 0.80
+  if cmd and type(cmd.domain) == "table" and cmd.domain.DomainName then
+    return
+  end
+  if not is_macos or (cmd and cmd.args and #cmd.args > 0) then
+    mux.spawn_window(cmd or {})
+    return
+  end
 
-  local screen = wezterm.gui.screens().main
+  local screen_names = {}
+  for name in pairs(wezterm.gui.screens().by_name) do
+    screen_names[#screen_names + 1] = name
+  end
+  assert(#screen_names > 0, "GUI startup requires at least one display")
+  table.sort(screen_names)
 
-  local pixel_width = screen.width * width_percent
-  local pixel_height = screen.height * height_percent
-
-  mux.spawn_window({
-    width = math.floor(pixel_width),
-    height = math.floor(pixel_height),
-    args = mcd and cmd.args or nil,
-  })
+  for _, name in ipairs(screen_names) do
+    local options = {}
+    for key, value in pairs(cmd or {}) do
+      options[key] = value
+    end
+    options.position = { x = 0, y = 0, origin = { Named = name } }
+    local _, _, window = mux.spawn_window(options)
+    local gui_window = window:gui_window()
+    assert(gui_window, "Startup must create a GUI window")
+    gui_window:maximize()
+  end
 end)
 
 -- ui
@@ -46,6 +59,7 @@ if is_windows then
 end
 
 if is_macos then
+	config.default_prog = { "/usr/bin/env", "-u", "HERDR_ENV", "/bin/zsh", "-lc", "exec herdr" }
 	config.window_background_opacity = 0.8
 	config.macos_window_background_blur = 50
 	config.window_frame.font_size = 13.0

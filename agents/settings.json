@@ -94,7 +94,8 @@
     "superpowers@claude-plugins-official": true,
     "i-have-adhd@i-have-adhd": true,
     "taste-skill@taste-skill": true,
-    "session-modes@agent-mods": true
+    "session-modes@agent-mods": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "context-mode": {
@@ -157,6 +158,7 @@
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
+  "theme": "dark",
   "editorMode": "normal",
   "remoteControlAtStartup": false,
   "autoMode": {
@@ -186,6 +188,5 @@
       "**Trusted repo**: ChaoticQubit/ScholarScope (private) at /Users/chaoticqubit/Code/ScholarScope, and its origin remote",
       "**Org-specific CLIs**: None configured — `gh-axi` and `npx` appeared once each in this project's transcripts, too infrequent to treat as routine org tooling"
     ]
-  },
-  "theme": "dark"
+  }
 }
