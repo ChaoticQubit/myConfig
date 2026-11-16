@@ -203,6 +203,63 @@ def test_red_base_search_is_bounded():
     assert len(calls) <= 1 + 1 + 7, len(calls)
 
 
+HOST = ("crazyagent", "CRAZYAGENT_TEST_NATIVE_AUTH_HOST")
+
+
+def test_cargo_test_steps_build_the_native_auth_host_and_point_at_it():
+    assert int_gate.test_host("crazyagent:CRAZYAGENT_TEST_NATIVE_AUTH_HOST") == HOST and int_gate.test_host("") is None
+    assert int_gate.TEST_HOST == os.environ.get("INT_GATE_TEST_HOST", "")
+    files = ["crates/crazyagent/src/custodian/native_auth.rs", "crates/crazyagent/tests/cli.rs"]
+    steps = int_gate.plan_steps(files, PACKAGES, exists=lambda p: True, host=HOST)
+    by = {s["name"]: s for s in steps}
+    for name in ("check", "clippy"):
+        assert "pre" not in by[name] and "env" not in by[name], by[name]
+    for name in ("lib crazyagent", "tests crazyagent"):
+        assert by[name]["pre"] == ["cargo", "build", "--locked", "--offline", "--bin", "crazyagent"], by[name]
+    root = tempfile.mkdtemp(prefix="int-gate-host-")
+    record = os.path.join(root, "calls.txt")
+    with open(os.path.join(root, "slot.sh"), "w") as fh:
+        fh.write('#!/bin/bash\nprintf "%s|%s|%s\\n" "$*" "${CRAZYAGENT_TEST_NATIVE_AUTH_HOST:-unset}" "$CARGO_TARGET_DIR" >> "$INT_GATE_TEST_RECORD"\n')
+    open(os.path.join(root, "env.sh"), "w").close()
+    target = os.path.join(root, "target")
+    os.environ["INT_GATE_TEST_RECORD"] = record
+    undo = point_runner_at(root)
+    try:
+        ok = run_step(by["lib crazyagent"], root, target, os.path.join(root, "logs", "lib.log"))
+    finally:
+        undo()
+    calls = open(record).read().strip().split("\n")
+    assert ok and len(calls) == 2, calls
+    want = os.path.join(target, "debug", "crazyagent")
+    assert calls[0].startswith("cargo build --locked --offline --bin crazyagent|") and calls[0].endswith("|" + target), calls
+    assert calls[1].startswith("cargo test -p crazyagent") and calls[1].split("|")[1] == want, calls
+    assert int_gate.step_env(by["check"], target) == {}
+    try:
+        int_gate.step_env(by["lib crazyagent"], "relative/target")
+        raise AssertionError("a relative target was accepted")
+    except AssertionError as err:
+        assert "relative/target" in str(err), err
+
+
+def point_runner_at(root):
+    """Makes the real step runner use root's stub slot.sh and env.sh through INT_GATE_RUNNER and INT_GATE_ENV; returns the undo."""
+    keep = {k: os.environ.get(k) for k in ("INT_GATE_RUNNER", "INT_GATE_ENV")}
+    os.environ["INT_GATE_RUNNER"] = os.path.join(root, "slot.sh")
+    os.environ["INT_GATE_ENV"] = os.path.join(root, "env.sh")
+    def undo():
+        for k, v in keep.items():
+            if v is None:
+                os.environ.pop(k, None)
+            else:
+                os.environ[k] = v
+    return undo
+
+
+def run_step(step, worktree, target, log):
+    """Runs one step through the real runner of this copy."""
+    return int_gate.step_runner(step, worktree, target, log)
+
+
 def test_low_disk_skips_bisect():
     root, repo, base = make_repo()
     calls = []

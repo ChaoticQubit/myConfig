@@ -26,6 +26,7 @@ R = wfenv.repo(F)
 LEADER = os.path.join(F, "leader")
 CARGO = ["--locked", "--offline"]
 TEST_FILE_RE = re.compile(r"^tests/([A-Za-z0-9_]+)\.rs$")
+TEST_HOST = os.environ.get("INT_GATE_TEST_HOST", "")
 ROOT_FILES = ("Cargo.toml", "Cargo.lock", "rust-toolchain", "rust-toolchain.toml")
 MIN_FREE_GIB = int(os.environ.get("INT_GATE_MIN_FREE_GIB", "20"))
 
@@ -33,7 +34,7 @@ MIN_FREE_GIB = int(os.environ.get("INT_GATE_MIN_FREE_GIB", "20"))
 class Config:
     """Paths and hooks for one run; runner(step, worktree, target, log) -> bool green, packages(worktree) -> {dir: name}."""
 
-    def __init__(self, worktree, scratch, state_dir, log_dir, hold, queue, runner, packages, free_gib=None, fmt=None):
+    def __init__(self, worktree, scratch, state_dir, log_dir, hold, queue, runner, packages, free_gib=None, fmt=None, host=None):
         self.worktree = os.path.abspath(worktree)
         self.scratch = scratch
         self.scratch_target = scratch.rstrip("/") + "-target"
@@ -45,6 +46,7 @@ class Config:
         self.packages = packages
         self.free_gib = free_gib or (lambda path: shutil.disk_usage(path).free / 2 ** 30)
         self.fmt = fmt or rustfmt_check
+        self.host = host
 
 
 def git(repo, *args, check=True):
@@ -54,11 +56,34 @@ def git(repo, *args, check=True):
     return out.stdout.strip() if check else out
 
 
-def plan_steps(files, packages, exists):
+def test_host(spec):
+    """Parses "<bin>:<ENV>" (INT_GATE_TEST_HOST) into (bin, env), or None when spec is empty."""
+    if not spec:
+        return None
+    m = re.fullmatch(r"([A-Za-z0-9_-]+):([A-Z][A-Z0-9_]*)", spec)
+    if m is None:
+        raise ValueError("INT_GATE_TEST_HOST must be <bin>:<ENV>, got %r" % spec)
+    return m.group(1), m.group(2)
+
+
+def step_env(step, target):
+    """Returns a step's extra environment with {target} filled by the absolute target dir the step builds into."""
+    assert os.path.isabs(target), "target must be absolute: %s" % target
+    return {k: v.replace("{target}", target) for k, v in step.get("env", {}).items()}
+
+
+def plan_steps(files, packages, exists, host=None):
     """Returns the ordered steps for a batch's changed files; [] when no package or root manifest changed.
 
     packages maps a package dir (repo-relative, in workspace order) to its name; exists(path) says a file is at HEAD.
+    host (bin, ENV): every cargo test step first builds that bin into its own target and gets ENV=<target>/debug/<bin>,
+    so bisect and confirm in the scratch tree build their own host too.
     """
+    def with_host(step):
+        if host is None:
+            return step
+        return dict(step, pre=["cargo", "build"] + CARGO + ["--bin", host[0]], env={host[1]: "{target}/debug/" + host[0]})
+
     touched = [d for d in packages if any(f.startswith(d + "/") for f in files)]
     root = any(f in ROOT_FILES or f.startswith(".cargo/") for f in files)
     if not touched and not root:
@@ -70,7 +95,7 @@ def plan_steps(files, packages, exists):
         {"name": "clippy", "cmd": ["cargo", "clippy"] + CARGO + ["--workspace", "--all-targets", "--", "-D", "warnings"], "tests": []},
     ]
     for d in touched:
-        steps.append({"name": "lib %s" % packages[d], "cmd": ["cargo", "test", "-p", packages[d]] + CARGO + ["--no-fail-fast", "--lib"], "tests": []})
+        steps.append(with_host({"name": "lib %s" % packages[d], "cmd": ["cargo", "test", "-p", packages[d]] + CARGO + ["--no-fail-fast", "--lib"], "tests": []}))
     for d in touched:
         tests = sorted({m.group(1) for f in files if f.startswith(d + "/") and exists(f)
                         for m in [TEST_FILE_RE.match(f[len(d) + 1:])] if m})
@@ -78,8 +103,8 @@ def plan_steps(files, packages, exists):
             cmd = ["cargo", "test", "-p", packages[d]] + CARGO + ["--no-fail-fast"]
             for t in tests:
                 cmd += ["--test", t]
-            steps.append({"name": "tests %s" % packages[d], "cmd": cmd, "tests": tests, "dir": d})
-    assert all(s["cmd"][0] == "cargo" for s in steps)
+            steps.append(with_host({"name": "tests %s" % packages[d], "cmd": cmd, "tests": tests, "dir": d}))
+    assert all(s["cmd"][0] == "cargo" and s.get("pre", ["cargo"])[0] == "cargo" for s in steps)
     return steps
 
 
@@ -173,7 +198,7 @@ def run(cfg, base):
     assert git(cfg.worktree, "merge-base", "--is-ancestor", base, head, check=False).returncode == 0, "base is not an ancestor of HEAD"
     commits = git(cfg.worktree, "rev-list", "--first-parent", "--reverse", "%s..%s" % (base, head)).split()
     files = [f for f in git(cfg.worktree, "diff", "--name-only", base, head).split("\n") if f]
-    steps = plan_steps(files, cfg.packages(cfg.worktree), lambda p: os.path.exists(os.path.join(cfg.worktree, p)))
+    steps = plan_steps(files, cfg.packages(cfg.worktree), lambda p: os.path.exists(os.path.join(cfg.worktree, p)), host=cfg.host)
     target = os.path.join(cfg.worktree, ".local-state", "target")
     stamp = "%s-%s" % (name, head[:9])
     dist = prepare(cfg.worktree) if steps else "none"
@@ -303,13 +328,24 @@ def rustfmt_check(worktree, files):
 
 
 def step_runner(step, worktree, target, log):
-    """Runs one step through INT_GATE_RUNNER (or directly) after sourcing INT_GATE_ENV, output to log; True on exit 0."""
+    """Runs one step through INT_GATE_RUNNER (or directly) after sourcing INT_GATE_ENV, output to log; True on exit 0.
+
+    A step's pre command (the test host build) runs first, through the runner too; a red pre makes the step red.
+    """
     os.makedirs(os.path.dirname(log), exist_ok=True)
+    extra = step_env(step, target)
+    env = dict(os.environ, **extra)
     script = '[ -z "$1" ] || source "$1"; export CARGO_TARGET_DIR="$2" CARGO_PROFILE_TEST_DEBUG=line-tables-only; r="$3"; shift 3; if [ -n "$r" ]; then exec bash "$r" "$@"; else exec "$@"; fi'
     with open(log, "w") as fh:
         fh.write("%s %s in %s\n" % (time.strftime("%H:%M:%S"), " ".join(step["cmd"]), worktree))
+        fh.write("".join("env %s=%s\n" % kv for kv in sorted(extra.items())))
         fh.flush()
-        rc = subprocess.run(["bash", "-c", script, "int-gate", env_file(), target, step_runner_path()] + step["cmd"], cwd=worktree, stdout=fh, stderr=subprocess.STDOUT).returncode
+        rc = 0
+        for cmd in ([step["pre"]] if step.get("pre") else []) + [step["cmd"]]:
+            rc = subprocess.run(["bash", "-c", script, "int-gate", env_file(), target, step_runner_path()] + cmd, cwd=worktree, env=env,
+                                stdout=fh, stderr=subprocess.STDOUT).returncode
+            if rc != 0:
+                break
         fh.write("%s rc=%d\n" % (time.strftime("%H:%M:%S"), rc))
     print("%s %s rc=%d (%s)" % (now(), step["name"], rc, log))
     return rc == 0
@@ -341,8 +377,10 @@ def plan_only(worktree, base):
     print("batch %s..%s: %d commits, %d files" % (base[:9], head[:9], len(commits), len(files)))
     for c in commits:
         print("  " + c[:150])
-    for step in plan_steps(files, cargo_packages(worktree), lambda p: os.path.exists(os.path.join(worktree, p))):
-        print("step %s: %s" % (step["name"], " ".join(step["cmd"])))
+    for step in plan_steps(files, cargo_packages(worktree), lambda p: os.path.exists(os.path.join(worktree, p)), host=test_host(TEST_HOST)):
+        pre = "%s && " % " ".join(step["pre"]) if step.get("pre") else ""
+        env = "".join("%s=%s " % kv for kv in sorted(step.get("env", {}).items()))
+        print("step %s: %s%s%s" % (step["name"], pre, env, " ".join(step["cmd"])))
     return 0
 
 
@@ -364,7 +402,7 @@ def main(argv):
             worktree=argv[1], scratch=os.path.join(R, ".worktrees", "int-gate-scratch"),
             state_dir=os.path.join(LEADER, "int-gate-state"), log_dir=os.path.join(LEADER, "logs"),
             hold=os.environ.get("INT_GATE_HOLD") or os.path.join(F, "slots", "HOLD"), queue=os.path.join(LEADER, "dispatch-leader-queue.md"),
-            runner=step_runner, packages=cargo_packages)
+            runner=step_runner, packages=cargo_packages, host=test_host(TEST_HOST))
         result = run(cfg, argv[2] if len(argv) == 3 else None)
         print(" ".join("%s=%s" % kv for kv in result.items()))
         return {"green": 0, "nothing": 0, "red": 1}.get(result["verdict"], 3)
