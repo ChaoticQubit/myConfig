@@ -1,5 +1,5 @@
 model = "gpt-6.1-sol"
-model_reasoning_effort = "xhigh"
+model_reasoning_effort = "high"
 model_context_window = 872000
 model_auto_compact_token_limit = 250000
 model_verbosity = "medium"
@@ -59,6 +59,7 @@ args = [ "idea-reality-mcp" ]
 [mcp_servers.node_repl]
 args = []
 command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+env_vars = ["BROWSER_USE_ACCESS_EXECUTOR_ID", "BROWSER_USE_ACCESS_PIPE_PATH", "BROWSER_USE_ACCESS_VERIFYING_IDENTITY"]
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
@@ -73,8 +74,8 @@ NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.1013.40934"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.1013.40934/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.1106.51428"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/chaoticqubit/.codex/plugins/cache/openai-bundled/browser/26.1106.51428/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 SKY_CUA_SERVICE_PATH = "/Users/chaoticqubit/.codex/computer-use/Codex Computer Use.app"
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex"
 
@@ -208,9 +209,6 @@ enabled = true
 [plugins."session-modes@agent-mods"]
 enabled = true
 
-[plugins."code-review@openai-bundled"]
-enabled = true
-
 [plugins."rust-analyzer-lsp@claude-plugins-official"]
 enabled = true
 
@@ -253,6 +251,12 @@ trust_level = "trusted"
 [projects."/Users/chaoticqubit/Projects/CrazyAgent"]
 trust_level = "trusted"
 
+[projects."/Users/chaoticqubit/Projects/CrazyAgent/.worktrees/rv-code"]
+trust_level = "trusted"
+
+[projects."/Users/chaoticqubit/Projects/CrazyAgent/.worktrees/rv-secreview"]
+trust_level = "trusted"
+
 [hooks.state]
 
 [hooks.state."/Users/chaoticqubit/.codex/hooks.json:session_start:0:0"]
@@ -283,19 +287,23 @@ trusted_hash = "sha256:cfc44df5867771d598750eb450da6f972390c5106be6759b146991dbe
 trusted_hash = "sha256:1eb43e102a80ae3369d7683a52a73e1403404141577f69f3992b8a4e84407cd6"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:pre_tool_use:0:0"]
-trusted_hash = "sha256:56da0c4249dc7af048f42ae458fb83931926a8af41ec6fab5ae819ff3a8c83ae"
+trusted_hash = "sha256:9b85e297ad70747b368c22e9c4e34281800709512705e3661c97cd3e721f9e22"
+trusted_content_hash = "sha256:c28b684c3bac03c1847628a30b2223497ec274bf054bb49db7bc64c045f0cf16"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:post_tool_use:0:0"]
-trusted_hash = "sha256:0d237345f8d46110d36cd0ef08e79b55fa151a07691dee36d492aa6f64bc0efd"
+trusted_hash = "sha256:5c9b252fba4884901034c3c1593e56cc1833efaf23cb24d0cde47974e2b94bff"
+trusted_content_hash = "sha256:c28b684c3bac03c1847628a30b2223497ec274bf054bb49db7bc64c045f0cf16"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:pre_compact:0:0"]
 trusted_hash = "sha256:ac1f9e5eb71ca262492150381d8f078b897056fc691f9973fc56d7b1b402e648"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:session_start:0:0"]
-trusted_hash = "sha256:a6cc6a322d0931bdd68a5969e523cd71e6eedccab4850e8996c8948311173618"
+trusted_hash = "sha256:36fd81896ba86e6dcc421f18e29c7a6c09bc76c2ee7562ede426dfb92e9dcf10"
+trusted_content_hash = "sha256:c28b684c3bac03c1847628a30b2223497ec274bf054bb49db7bc64c045f0cf16"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:user_prompt_submit:0:0"]
-trusted_hash = "sha256:114549c484c131b94782d3424527dd1042d48bc3a8616a11299acdf60b112572"
+trusted_hash = "sha256:7d2143376a6f28c939b711bde2e99125e2387e1a6a2a95da069df2324daf602e"
+trusted_content_hash = "sha256:c28b684c3bac03c1847628a30b2223497ec274bf054bb49db7bc64c045f0cf16"
 
 [hooks.state."context-mode@context-mode:.codex-plugin/hooks.json:stop:0:0"]
 trusted_hash = "sha256:9205c1763e40c0256ab334e2e96c037c1cdf5b8bfaddba31ed19d93d3388586a"
@@ -326,11 +334,11 @@ dock-icon-preference = "codex-system"
 enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra", "max"]
 selected-avatar-id = "hoots"
 avatar-overlay-mascot-width-px = 105
-followUpQueueMode = "queue"
 open-link-in-target-preference = "in-app-browser"
 git-branch-prefix = ""
 agent-usage-reset-enabled = false
 sidebar-show-projects-in-recents = false
+migratedFollowUpQueueToSteer = true
 
 [desktop.daybreak-enabled]
 accountId = "f4f68319-5fce-4f02-adf1-dfa336f7d55a"

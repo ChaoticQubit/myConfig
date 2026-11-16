@@ -91,13 +91,13 @@
       {
         "id": "2b54665b-9f0a-4e41-a601-09bb5641a111",
         "type": "current-working-dir",
+        "color": "brightYellow",
+        "bold": true,
         "rawValue": true,
         "metadata": {
           "segments": "3",
           "abbreviateHome": "true"
-        },
-        "bold": true,
-        "color": "brightYellow"
+        }
       },
       {
         "id": "83837c96-4ec1-4614-9f73-98dde419c444",
@@ -106,17 +106,21 @@
       {
         "id": "102c5abd-0417-4ced-9faf-aa62a9d2278c",
         "type": "skills",
-        "rawValue": false,
+        "color": "brightCyan",
         "bold": true,
-        "color": "brightCyan"
+        "rawValue": false
       }
     ]
   ],
   "flexMode": "full-minus-40",
   "compactThreshold": 60,
   "colorLevel": 2,
+  "defaultPaddingSide": "both",
   "inheritSeparatorColors": false,
   "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "terminalWidthCacheTtlSeconds": 5,
+  "customCommandCacheTtlSeconds": 0,
   "minimalistMode": false,
   "powerline": {
     "enabled": false,
