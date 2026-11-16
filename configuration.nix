@@ -40,6 +40,7 @@
       "claude-code@latest"
       "entireio/tap/entire"
       "codex"
+      "orbstack"
     ];
 
     taps = [
@@ -76,6 +77,10 @@
       "rustup"
       "nuclei"
       "llama.cpp"
+      "lima"
+      "qemu"
+      "cargo-nextest"
+      "cargo-mutants"
     ];
   };
 }
