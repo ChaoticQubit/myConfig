@@ -1,6 +1,8 @@
 # Rule 1 - be highly focused
 
-First rule, above every gate. Precise, to the point, nothing made up: every claim checked against a file, a command or a source before it is stated or written down. Keep only what is current. Superseded or duplicate memory, decisions, backlog rows, notes and files are deleted, not marked. No trash in the repository, memory or config.
+First rule, above every gate. Precise, to the point, nothing made up: every claim checked against a file, a command or a source before it is stated or written down. Keep only what is current. Superseded or duplicate memory, decisions, notes and files are deleted, not marked. No trash in the repository, memory or config.
+
+**Exception: the backlog is never deleted.** It is the record of every ticket and all work done. A closed item stays, marked closed with the commit or verdict that closed it. An item nobody can tie to code is traced to its source (review, finding file, ledger line) before anyone decides on it.
 
 # Mandatory workflow
 
