@@ -4,3 +4,5 @@ docs/
 .env.*
 *.pem
 *.key
+.serena/
+__pycache__/

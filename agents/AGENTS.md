@@ -1,3 +1,7 @@
+# Rule 1 - be highly focused
+
+First rule, above every gate. Precise, to the point, nothing made up: every claim checked against a file, a command or a source before it is stated or written down. Keep only what is current. Superseded or duplicate memory, decisions, backlog rows, notes and files are deleted, not marked. No trash in the repository, memory or config.
+
 # Mandatory workflow
 
 Gates in order. Higher gate answers question -> stop, no descending for same question. Build/add/change/fix request -> gates 1, 3, 4, 5, 6 all mandatory. Known failure: ponytail + superpowers used, software-practices skipped, grill-me skipped, review skipped to raise PR fast. Skip none.
@@ -11,6 +15,7 @@ First action. Before graph, before source, before grill-me.
 - Already on branch matching *current* request -> continue it. Else cut new one from up-to-date trunk.
 - Confirm before destructive git op (force-push, `reset --hard`, branch delete).
 - Exception: edits only to gitignored files (docs scratch, `CLAUDE.md`, `.claude/settings*`) = no commit, no branch.
+- Exception: `~/myConfig` works on `master` only. Never create a branch there; commit on `master`. Its working tree is the live machine config, so a branch switch changes the running setup.
 
 ## 1. graphify - codebase cache, checked before anything
 
@@ -36,7 +41,7 @@ Only exception: trivial fully-specified mechanical edit (typo, exact rename user
 
 - When grill-me completes, immediately persist the decision-relevant context in `docs/agent-decisions.md` before gate 4 or any long-running tool work.
 - Each entry includes the date, task or ticket, topic, goal, constraints, decisions, rejected alternatives, risks, acceptance criteria, and unresolved questions.
-- Append to or update the relevant topic section. Never erase prior decisions. Mark changed decisions as superseded with the replacement and reason.
+- Update the relevant topic section in place. A changed decision replaces the old text, with the reason in one line. Superseded text is deleted (Rule 1).
 - If the durable record cannot be written, stop and report the failure before continuing.
 - Update available agent memory with a short pointer or stable preference only after the document is written. The document is the source of truth.
 
@@ -114,7 +119,8 @@ default replaces the older DeepSec-plus-Codex-Security review split.
    of label. Medium/low/style suggestions do not otherwise block merge. A critical/high
    design error restarts gate 3; other fixes are patched in place or filed.
 6. **One confirm round at most**, only after substantial fixes. Review the new frozen target
-   for regressions from those fixes. Two rounds is the ceiling; a third needs asking first.
+   for regressions from those fixes. Two rounds is the ceiling. A third only for an open
+   critical/high. Medium/low still open after round two go to the backlog and the branch merges.
 7. **Retain evidence and measure the experiment.** Record scan ID, actual model, target SHAs,
    evidence manifest, input/disposition counts, validated findings by source, independent
    Codex Security discoveries, coverage gaps, elapsed time, and usage/cost when reported.
@@ -151,6 +157,26 @@ Ticket/issue created, analysis broken into work items, spec/PRD written, initiat
 - `to-releases` / `to-features` / `to-linear-projects` slice broad scope into releases -> features/epics -> Linear projects.
 
 Issues small and vertical, written from the problem not the task. One issue = one grabbable slice.
+
+# Sprint loop - one leader, parallel worker and reviewer agents
+
+Applies whenever a leader runs several agents in parallel. A short loop per merge batch, not one long loop ending at the release gate.
+
+Tools in `~/myConfig/dotfiles/agents/workflow/`: `dispatch.sh` (route DONE), `int-gate.sh` (batch check), `measure-day.sh` (numbers), `watch_events.py` (status events), `st.sh` (status line). Each needs `WORKFLOW_ROOT` set to the sprint folder; tests sit beside each tool.
+
+1. **Slices.** Independent slices (no shared files or functions) spread across workers. A slice that needs another slice's unmerged code stays with that slice's worker, queued after it. Moving a commit, branch or finding between integration lines is the leader's call, logged with the reason.
+2. **DONE.** Worker posts one DONE line: branch, base..tip, verdict word (VERIFIED, NOT VERIFIED, or INCONCLUSIVE = written, not run), the DONE file. No verdict word = not done. Format check on touched files before DONE.
+3. **Route by rule.** A dispatcher maps each DONE to a free code reviewer and a free security reviewer from a fixed table and tells both at once. No DONE waits on the leader's attention. The leader alone handles critical/high/medium findings, conflicts, questions, merges, round 3 and owner asks. A new router runs dry against the ledger before it goes live.
+4. **Review depth by risk.** Risk classes: sign-in and accounts, sandbox and permissions, durable writes, delete and reset, landing and publish, recovery. Both tracks are the default. Code track only when the leader confirms all three, logged: outside every class, diff is docs, copy, tests or a pure refactor, and the line-end security scan covers it.
+5. **Round cap.** Two rounds per branch (r1, one confirm). Round 3 only for an open critical/high. Medium/low open after round 2 go to the backlog with branch, tip and findings file; the branch merges.
+6. **Work in flight sized to review.** More than two branches waiting per reviewer pair -> the next free worker verifies (reads waiting DONE files and red rows, prepares folds) instead of starting new code.
+7. **Batch check per merge batch.** After each merge batch on the integration branch, one run: check and lint on all targets, unit tests of every touched package, every changed test file. Red -> bisect the batch in a scratch worktree, revert the one bad merge there to confirm, fix on its branch. The shared branch never moves for this.
+8. **Effort by role.** xhigh for planning, research, security review and hard bugs. high for implementers, code reviewers and the gate. medium for mechanical rows. Unassigned role -> xhigh. Each agent starts at its role's effort, so a usage limit stops part of the sprint, not all of it.
+9. **Usage.** The real meter is `/usage`: read it twice, 10 minutes apart, for the rate, and size live sessions to it. Never trust a token estimate. Read the plan terms before relying on a second account.
+10. **Measure each workflow change.** Name its number and baseline before it goes live (gate minutes, DONE-to-merge time, rounds, tokens and findings per merged branch, limit stops). Compare against a day of the same kind; one day is a sample of one. Keep or drop on the number.
+11. **Guards over prose.** A rule broken twice becomes a check that fails on the real past mistake. Keep a list of which rules are guarded and which are prose only.
+12. **Not used:** a hosted merge queue (paid minutes, a reported silent revert; the local merge train plus the batch check does the job), agent teams or hidden subagents for implementation or review (tokens grow per agent, work invisible; parallel work = visible sessions, one per worktree), an AI review bot as a third review track, one build output directory shared across worktrees (stale binaries), a model router for now, a new spec layer on top of a short per-slice contract.
+13. **Rust projects:** trial cargo-nextest next to cargo test on one gate head; `cargo build --timings` before any build-speed change; `cargo-mutants --in-diff` on risk-class rows once the batch check runs.
 
 # Engineering priorities
 
