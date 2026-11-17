@@ -186,6 +186,7 @@ Ranked. Lower never wins a tradeoff against higher.
 
 1. **Security** - codebase, users, data. Every step, architecture-level decisions included. Beats delivery speed, convenience, performance.
 2. **Performance** - below security, above everything else. Technology, framework, architecture choices from the base up, not just hot-path code.
+   - **Best case and worst case, always.** Every performance measurement runs twice and reports both: on a quiet machine (best case) and on a loaded one (worst case: the real load of a working day, builds, agents and other apps running, never stopped to make the number look good). One condition alone is not a result.
 3. **Testing** - four kinds. Unit first (TDD): write test, watch it fail, implement until pass.
    - **Unit** - written before implementation exists. Test the real function/module. Mock only when testing the real thing is genuinely impossible (believable case: a database dependency). Mocking is the fallback, never the default.
    - **Integration** - one feature in its own context (e.g. "add a second shipping address" as its own capability), against real systems. No mocking.
