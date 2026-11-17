@@ -231,6 +231,7 @@ in
   xdg.configFile."nvim".source = ./nvim;
   xdg.configFile."wezterm".source = ./wezterm;
   xdg.configFile."herdr/config.toml".source = ./herdr/config.toml;
+  xdg.configFile."herdr/sounds/silent.mp3".source = ./herdr/sounds/silent.mp3;
   xdg.configFile."ccstatusline/settings.json" = {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/ccstatusline/settings.json";
     force = true;

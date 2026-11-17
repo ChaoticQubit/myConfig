@@ -84,3 +84,6 @@ navigate_pane_right = "l"                  # pane right
 
 [ui]
 agent_panel_sort = "spaces"                # group agents by space, not priority
+
+[ui.sound]
+done_path = "sounds/silent.mp3"
