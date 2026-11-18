@@ -237,6 +237,10 @@ in
     force = true;
   };
   home.file = codexSkillLinks // {
+    ".local/bin/afplay" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/herdr/afplay";
+      force = true;
+    };
     ".claude/settings.json" = {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/agents/settings.json";
       force = true;

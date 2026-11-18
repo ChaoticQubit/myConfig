@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+player=/usr/bin/afplay
+
+if [ "$#" -ne 1 ]; then
+  exec "$player" "$@"
+fi
+
+case "$1" in
+  */.config/herdr/sounds/silent.mp3)
+    exit 0
+    ;;
+  */herdr-sound-*.mp3)
+    status=0
+    /usr/bin/lockf -k -s -t 0 "${TMPDIR:-/tmp}/herdr-afplay.lock" "$player" "$1" || status=$?
+    case "$status" in
+      75) exit 0 ;;
+      73) exec "$player" "$1" ;;
+    esac
+    exit "$status"
+    ;;
+esac
+
+exec "$player" "$1"

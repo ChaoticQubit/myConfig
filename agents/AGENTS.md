@@ -222,3 +222,11 @@ Ranked. Lower never wins a tradeoff against higher.
   - Check the tool's own convention first. Some (DeepSec `.deepsec/`) are meant to be committed - shared state across runs/CI/teammates. Ignoring one defeats the tool.
   - New agent-instruction files (`CLAUDE.md`, `AGENTS.md`) default to tracked, matching ScholarScope. Ignoring one is a per-project call, not the default: an untracked file does not ship on clone, does not show in PR diffs.
   - Never ignore `.github/` or `.gitignore` itself. "Dotfiles" here = tool-generated state, not every file starting with a dot.
+
+# Bend
+
+When using Bend:
+- run `bend guide` to learn it
+- use `LAWS.bend` to keep important rules
+- run `bend PROOF.bend` before committing
+- parallelize the code whenever possible
